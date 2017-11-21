@@ -18,6 +18,13 @@ ext {
             daggerK : "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
 
+    roomVersion = "1.0.0"
+    roomDependencies=[
+           room : "android.arch.persistence.room:runtime:${roomVersion}",
+           aroom : "android.arch.persistence.room:compiler:${roomVersion}",
+           rxroom :"android.arch.persistence.room:rxjava2:${roomVersion}"
+    ]
+
 
     squareVersion = '2.2.0'
     picassoVersion = '2.5.2'

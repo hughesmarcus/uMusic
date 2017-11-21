@@ -1,20 +1,18 @@
 package com.umusic.marcus.umusic.ui.tracks
 
-import butterknife.ButterKnife
-import android.widget.TextView
-import butterknife.BindView
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Track
 import java.util.*
-import java.util.Collections.emptyList
-import kotlinx.android.synthetic.main.item_track.*
-
 
 
 class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
@@ -31,6 +29,7 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
         return TracksViewHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
         val track = tracks!![position]
 
@@ -40,7 +39,7 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
         if (track.album!!.images!!.isNotEmpty()) {
             holder.imageView!!.scaleType = ImageView.ScaleType.FIT_XY
             for (i in 0 until track.album!!.images!!.size) {
-                if (track.album!!.images!![i] != null && track.album!!.images!!.isNotEmpty()) {
+                if (track.album!!.images!!.isNotEmpty()) {
                     Picasso.with(holder.imageView!!.context)
                             .load(track.album!!.images!!.get(0).url)
                             .into(holder.imageView)
@@ -53,7 +52,7 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
                     .into(holder.imageView)
         }
 
-        holder.itemView.setOnClickListener({ view: View ->
+        holder.itemView.setOnClickListener({
             if (itemClickListener != null) {
                 itemClickListener!!.onItemClick(tracks!!, track, position)
             }

@@ -1,34 +1,34 @@
 package com.umusic.marcus.umusic.ui.tracks
 
+import android.annotation.SuppressLint
 import android.app.Dialog
-import android.support.v4.app.DialogFragment
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
-import android.widget.SeekBar
-import com.google.gson.reflect.TypeToken
-import com.google.gson.GsonBuilder
-import com.squareup.picasso.Picasso
-import butterknife.OnClick
-import com.umusic.marcus.umusic.interactor.PlayerInteractor
-import butterknife.ButterKnife
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.annotation.Nullable
-import android.view.ViewGroup
+import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
-import com.umusic.marcus.umusic.R
-import com.umusic.marcus.umusic.data.model.Track
-import com.umusic.marcus.umusic.ui.utils.ServiceUtils
-import kotlinx.android.synthetic.main.fragment_audio_player.*
-
-import java.util.ArrayList
+import android.widget.SeekBar
 import android.widget.TextView
 import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
+import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.data.model.Track
+import com.umusic.marcus.umusic.interactor.PlayerInteractor
+import com.umusic.marcus.umusic.ui.utils.ServiceUtils
+import kotlinx.android.synthetic.main.fragment_audio_player.*
+import java.util.*
 
 
 
@@ -81,32 +81,32 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         if (dialog != null && retainInstance) {
             dialog.setDismissMessage(null)
         }
-        audioPlayerPresenter!!.terminate()
+        audioPlayerPresenter.terminate()
         super.onDestroyView()
     }
 
     @OnClick(R.id.ib_preview_player)
     fun previewTrack() {
-        audioPlayerPresenter!!.onPreviewTrack()
+        audioPlayerPresenter.onPreviewTrack()
     }
 
     @OnClick(R.id.ib_next_player)
     fun nextTrack() {
-        audioPlayerPresenter!!.onNextTrack()
+        audioPlayerPresenter.onNextTrack()
     }
 
     @OnClick(R.id.ib_play_player)
     fun playTrack() {
-        audioPlayerPresenter!!.onPlayPauseTrack()
+        audioPlayerPresenter.onPlayPauseTrack()
     }
 
     override fun setInfoTrackPlayer(trackPosition: Int) {
-        txt_track_title_player!!.text= trackList!![trackPosition].name
-        txt_album_title_player!!.text = trackList!![trackPosition].album!!.name
+        txt_track_title_player.text = trackList!![trackPosition].name
+        txt_album_title_player.text = trackList!![trackPosition].album!!.name
 
         if (trackList!![trackPosition].album!!.images!!.isNotEmpty()) {
             (0 until trackList!![trackPosition].album!!.images!!.size)
-                    .filter { trackList!![it] != null && trackList!![trackPosition].album!!.images!!.isNotEmpty() }
+                    .filter { trackList!![trackPosition].album!!.images!!.isNotEmpty() }
                     .forEach {
                         Picasso.with(activity)
                                 .load(trackList!![trackPosition].album!!.images!![0].url)
@@ -120,7 +120,7 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
     }
 
     override fun onDestroy() {
-        audioPlayerPresenter!!.terminate()
+        audioPlayerPresenter.terminate()
         super.onDestroy()
     }
 
@@ -132,6 +132,7 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         return gson.fromJson(tracks, trackType)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
         txt_time_start!!.text = "00:" + String.format("%02d", i)
         trackCurrentPosition = i

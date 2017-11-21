@@ -54,6 +54,10 @@ dependencies {
 
     implementation elementalDependencies.circleimageview
 
+    implementation roomDependencies.room
+    annotationProcessor roomDependencies.aroom
+    implementation roomDependencies.rxroom
+
 
     implementation "com.jakewharton:butterknife:8.5.1"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

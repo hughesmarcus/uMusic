@@ -1,9 +1,8 @@
 package com.umusic.marcus.umusic.ui.tracks
 
 import android.content.ServiceConnection
-import io.reactivex.internal.util.ExceptionHelper.terminate
-import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.interactor.AudioFinishedListener
+import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 
 

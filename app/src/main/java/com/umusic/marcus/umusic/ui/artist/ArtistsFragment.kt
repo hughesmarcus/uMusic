@@ -1,28 +1,25 @@
 package com.umusic.marcus.umusic.ui.artist
 
+import android.app.SearchManager
 import android.content.Context
-import android.net.Uri
-import android.os.Bundle
-import android.support.v4.app.Fragment
-
-import com.umusic.marcus.umusic.R
 import android.content.Intent
-import com.umusic.marcus.umusic.data.model.Artist
-import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.support.annotation.Nullable
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.app.SearchManager
 import android.view.*
-import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
-import com.umusic.marcus.umusic.interactor.ArtistsInteractor
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.data.model.Artist
+import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
+import com.umusic.marcus.umusic.interactor.ArtistsInteractor
 import com.umusic.marcus.umusic.ui.tracks.TracksActivity
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.toolbar.*
-import javax.inject.Inject
 
 
 class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTextListener {
@@ -70,10 +67,6 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_music, menu)
         setupSearchView(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {

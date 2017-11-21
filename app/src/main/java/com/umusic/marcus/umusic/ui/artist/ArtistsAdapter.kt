@@ -1,20 +1,15 @@
 package com.umusic.marcus.umusic.ui.artist
 
-import com.umusic.marcus.umusic.data.model.Artist
-import android.widget.TextView
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import butterknife.BindView
-import butterknife.ButterKnife
+import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
-import java.util.*
-import kotlinx.android.synthetic.main.item_artist.*
-import com.umusic.marcus.umusic.ui.artist.ArtistsAdapter.ItemClickListener
+import com.umusic.marcus.umusic.data.model.Artist
 import kotlinx.android.synthetic.main.item_artist.view.*
+import java.util.*
 
 
 class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsViewHolder>() {
@@ -26,6 +21,7 @@ class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsViewHolder>() 
         artists = Collections.emptyList()
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_artist, null)
         return ArtistsViewHolder(itemView)
@@ -35,7 +31,7 @@ class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsViewHolder>() 
         val artist = artists!![position]
         holder.bind(artist)
 
-        holder.itemView.setOnClickListener({ view: View ->
+        holder.itemView.setOnClickListener({
             if (itemClickListener != null) {
                 itemClickListener!!.onItemClick(artist, position)
             }
@@ -65,7 +61,7 @@ class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsViewHolder>() 
             if (artist.images!!.isNotEmpty()) {
 
                 for (i in artist.images!!.indices) {
-                    if (artist.images!![i] != null && artist.images!!.size > 0) {
+                    if (artist.images!!.size > 0) {
                         Picasso.with(img_view_artist_image.context)
                                 .load(artist.images!![0].url)
                                 .into(img_view_artist_image)

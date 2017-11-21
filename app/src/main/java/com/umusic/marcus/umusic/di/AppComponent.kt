@@ -15,7 +15,9 @@ import javax.inject.Singleton
     ApplicationModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
-        SpotifyServicesModule::class
+        SpotifyServicesModule::class,
+        RoomModule::class
+
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
@@ -31,6 +33,8 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
         @BindsInstance
         fun application(application: Application): AppComponent.Builder
 
+        fun roomModule(roomModule: RoomModule): Builder
         fun build(): AppComponent
+
     }
 }

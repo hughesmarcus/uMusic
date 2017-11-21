@@ -1,23 +1,22 @@
 package com.umusic.marcus.umusic.ui.tracks
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.google.gson.reflect.TypeToken
-import com.google.gson.GsonBuilder
-import com.squareup.picasso.Picasso
-import com.umusic.marcus.umusic.data.model.Artist
-import android.support.v7.widget.LinearLayoutManager
 import android.support.design.widget.AppBarLayout
-import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
-import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
-import com.umusic.marcus.umusic.interactor.TracksInteractor
-import butterknife.ButterKnife
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import butterknife.ButterKnife
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.data.model.Artist
 import com.umusic.marcus.umusic.data.model.Track
+import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
+import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.utils.BlurEffectUtils
 import kotlinx.android.synthetic.main.activity_tracks.*
 
@@ -47,7 +46,7 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
 
     override fun showLoading() {
         pv_tracks!!.visibility = View.VISIBLE
-        iv_tracks!!.setVisibility(View.GONE)
+        iv_tracks!!.visibility = View.GONE
         txt_line_tracks!!.visibility = View.GONE
         rv_tracks!!.visibility = View.GONE
     }
@@ -60,7 +59,7 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
     override fun showTracksNotFoundMessage() {
         pv_tracks!!.visibility = View.GONE
         txt_line_tracks!!.visibility = View.VISIBLE
-        iv_tracks!!.setVisibility(View.VISIBLE)
+        iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_tracks_not_found)
         iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context(), R.mipmap.ic_not_found))
     }
@@ -68,7 +67,7 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
     override fun showConnectionErrorMessage() {
         pv_tracks!!.visibility = View.GONE
         txt_line_tracks!!.visibility = View.VISIBLE
-        iv_tracks!!.setVisibility(View.VISIBLE)
+        iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_internet_connection)
         iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context(), R.mipmap.ic_not_internet))
     }
@@ -93,7 +92,7 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() === android.R.id.home) {
+        if (item.itemId === android.R.id.home) {
             onBackPressed()
             return true
         }

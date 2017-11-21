@@ -1,11 +1,14 @@
 package com.umusic.marcus.umusic.data.model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
-import android.os.Parcelable.Creator
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "artists")
 class Artist : Parcelable {
 
     @SerializedName("external_urls")
@@ -20,13 +23,16 @@ class Artist : Parcelable {
     @SerializedName("href")
     @Expose
     var href: String? = null
+    @PrimaryKey
     @SerializedName("id")
+    @ColumnInfo(name = "name")
     @Expose
     var id: String? = null
     @SerializedName("images")
     @Expose
     var images: List<Image>? = ArrayList<Image>()
     @SerializedName("name")
+    @ColumnInfo(name = "name")
     @Expose
     var name: String? = null
     @SerializedName("popularity")
@@ -56,7 +62,7 @@ class Artist : Parcelable {
      * No args constructor for use in serialization
      *
      */
-    constructor() {}
+    constructor()
 
     /**
      *

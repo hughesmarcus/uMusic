@@ -4,7 +4,9 @@ import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import javax.inject.Scope
 
-@MustBeDocumented
+/**
+ * Created by Marcus on 11/21/2017.
+ */
 @Scope
-@Retention(RetentionPolicy.RUNTIME)
-annotation class ActivityScoped
+@Retention(RetentionPolicy.CLASS)
+internal annotation class AppScoped
