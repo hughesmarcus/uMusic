@@ -5,9 +5,6 @@ import com.umusic.marcus.umusic.data.model.Artist
 import io.reactivex.Flowable
 
 
-/**
- * Created by Marcus on 11/21/2017.
- */
 @Dao
 interface ArtistDao {
     @Query("SELECT * FROM artist WHERE id=:id")

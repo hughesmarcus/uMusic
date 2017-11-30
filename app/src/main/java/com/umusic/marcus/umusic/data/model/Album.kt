@@ -2,7 +2,6 @@ package com.umusic.marcus.umusic.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.os.Parcelable.Creator
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -53,7 +52,7 @@ class Album : Parcelable {
      * No args constructor for use in serialization
      *
      */
-    constructor() {}
+    constructor()
 
     /**
      *

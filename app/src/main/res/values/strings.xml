@@ -1,10 +1,8 @@
 <resources>
-    <string name="app_name">Spotify</string>
+    <string name="app_name">UMusic</string>
 
     <!-- Menu -->
     <string name="action_search">Search</string>
-    <string name="action_github">Github</string>
-
 
     <!-- fragment_artists.xml -->
     <string name="search_hint">Search Artist</string>
@@ -30,9 +28,9 @@
 
 
     <!-- exceptions -->
-    <string name="error_artist_not_found">Artist not found, please check that the name is written in the right way</string>
-    <string name="error_tracks_not_found">Tracks not found, please check that the name is written in the right way</string>
+    <string name="error_artist_not_found">Artist not found, please check that a correct name is entered</string>
+    <string name="error_tracks_not_found">Tracks not found, please check that a correct name is entered</string>
     <string name="error_internet_connection">Please check your Internet connection!</string>
-    <string name="error_server_internal">Something went wrong with the server.</string>
+    <string name="error_server_internal">Oops,Something is wrong with the server.</string>
 
 </resources>

@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTextListener {
 
 
-     lateinit var artistsPresenter: ArtistsPresenter
+    lateinit var artistsPresenter: ArtistsPresenter
     @BindView(R.id.rv_artists)
     lateinit var rv_artist: RecyclerView
 
@@ -150,9 +150,8 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
                         artistsPresenter.launchArtistDetail(artist)
                     }
 
-
                 }
-                )
+        )
         rv_artist.adapter = adapter
     }
 

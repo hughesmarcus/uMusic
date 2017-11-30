@@ -1,12 +1,12 @@
 package com.umusic.marcus.umusic.ui.utils
 
-import android.renderscript.ScriptIntrinsicBlur
-import android.renderscript.Allocation
-import android.renderscript.RenderScript
-import android.graphics.Bitmap
-import com.squareup.picasso.Transformation
 import android.content.Context
+import android.graphics.Bitmap
+import android.renderscript.Allocation
 import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
+import com.squareup.picasso.Transformation
 
 
 class BlurEffectUtils(protected val context: Context, radius: Int) : Transformation {

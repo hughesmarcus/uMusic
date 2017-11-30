@@ -2,7 +2,6 @@ package com.umusic.marcus.umusic.ui.utils
 
 import android.app.ActivityManager
 import android.content.Context
-import android.content.Context.ACTIVITY_SERVICE
 
 
 object ServiceUtils {

@@ -1,6 +1,5 @@
 package com.umusic.marcus.umusic.interactor
 
-import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.data.model.TracksContainer
 import com.umusic.marcus.umusic.data.remote.client.SpotifyService
 import io.reactivex.Observable

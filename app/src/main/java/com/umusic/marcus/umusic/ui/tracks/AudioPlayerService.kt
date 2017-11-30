@@ -4,16 +4,12 @@ import android.app.Service
 import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Binder
-import android.os.Bundle
-import android.os.Handler
-import android.os.IBinder
-import android.os.Message
+import android.os.*
 import android.support.annotation.Nullable
 import java.io.IOException
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 
+@Suppress("DEPRECATION")
 class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
     private var mediaPlayerBinder: PlayerBinder? = null
@@ -34,47 +30,31 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
             0
         }
 
-    /**
-     * This method is executed first (1er)
-     * initialize the Binder.
-     */
 
     override fun onCreate() {
         super.onCreate()
         mediaPlayerBinder = PlayerBinder()
     }
 
-    /**
-     * This method is executed second (2nd)
-     * Receives a string (EXTRA_TRACK_PREVIEW_URL) of intent from where he was released
-     */
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        if (intent != null
-                && intent.hasExtra(EXTRA_TRACK_PREVIEW_URL)
-                && intent.getStringExtra(EXTRA_TRACK_PREVIEW_URL) != null) {
-            setTrackPreviewUrl(intent.getStringExtra(EXTRA_TRACK_PREVIEW_URL))
-            onPlayAudio(0)
+        when {
+            intent != null
+                    && intent.hasExtra(EXTRA_TRACK_PREVIEW_URL)
+                    && intent.getStringExtra(EXTRA_TRACK_PREVIEW_URL) != null -> {
+                setTrackPreviewUrl(intent.getStringExtra(EXTRA_TRACK_PREVIEW_URL))
+                onPlayAudio(0)
+            }
         }
         return Service.START_STICKY
     }
 
-    /**
-     * This method is executed third (3th)
-     * returns an IBinder object that defines the programming
-     * interface that clients can use to interact with the service
-     */
 
     @Nullable override fun onBind(intent: Intent): IBinder? {
         return mediaPlayerBinder
     }
 
-
-    /*
-     * This method is executed fourth (4th)
-     * This method is called when the media file is ready for playback.
-     */
 
     override fun onPrepared(mediaPlayer: MediaPlayer) {
         mediaPlayer.start()
@@ -86,17 +66,12 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
     }
 
 
-    /*
-     * This method is executed fiveth (5th)
-     * This method is called when the media file is finished playback
-     */
-
     override fun onCompletion(mediaPlayer: MediaPlayer) {
 
         val completionMessage = Message()
         val completionBundle = Bundle()
         completionBundle.putBoolean(EXTRA_IS_PLAYER, false)
-        completionMessage.setData(completionBundle)
+        completionMessage.data = completionBundle
         if (mediaPlayerHandler != null) {
             mediaPlayerHandler!!.sendMessage(completionMessage)
         }
@@ -115,41 +90,35 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
         this.trackPreviewUrl = trackPreviewUrl
     }
 
-
-    /*
-     * We validate the state of the media player if isPlaying() to play the track
-     */
-
     fun onPlayAudio(trackPosition: Int) {
         currentTrackPosition = trackPosition
-        if (mediaPlayer != null) {
-            if (mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.stop()
-            }
+        when {
+            mediaPlayer != null -> {
+                when {
+                    mediaPlayer!!.isPlaying -> mediaPlayer!!.stop()
+                }
 
-            mediaPlayer!!.reset()
+                mediaPlayer!!.reset()
+            }
         }
         setupAudioPlayer()
         isPlayerPaused = false
     }
 
     fun onPauseAudio(): Int {
-        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
-            mediaPlayer!!.pause()
-            isPlayerPaused = true
-            noUpdateUI()
-            return mediaPlayer!!.duration / 1000
-        } else {
-            return 0
+        return when {
+            mediaPlayer != null && mediaPlayer!!.isPlaying -> {
+                mediaPlayer!!.pause()
+                isPlayerPaused = true
+                noUpdateUI()
+                mediaPlayer!!.duration / 1000
+            }
+            else -> 0
         }
     }
 
 
-    /*
-     * Initialize the track and call OnPreparedListener and OnCompletionListener.
-     */
-
-    fun setupAudioPlayer() {
+    private fun setupAudioPlayer() {
 
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer()
@@ -170,15 +139,17 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
 
     override fun onDestroy() {
         super.onDestroy()
-        if (timer != null) {
-            noUpdateUI()
+        when {
+            timer != null -> noUpdateUI()
         }
-        if (mediaPlayer != null) {
-            mediaPlayer!!.release()
-            mediaPlayer = null
+        when {
+            mediaPlayer != null -> {
+                mediaPlayer!!.release()
+                mediaPlayer = null
+            }
         }
-        if (mediaPlayerHandler != null) {
-            mediaPlayerHandler = null
+        when {
+            mediaPlayerHandler != null -> mediaPlayerHandler = null
         }
     }
 
@@ -200,7 +171,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
 
     private fun sendCurrentTrackPosition() {
         val message = Message()
-        message.setData(getCurrentTrackPosition())
+        message.data = getCurrentTrackPosition()
         if (mediaPlayerHandler != null) {
             mediaPlayerHandler!!.sendMessage(message)
         }
@@ -230,17 +201,19 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
         this.mediaPlayerHandler = spotifyPlayerHandler
         val playerMessage = Message()
         val playerBundle: Bundle
-        if (this.mediaPlayerHandler != null && (isPlayerPaused || mediaPlayer!!.isPlaying)) {
-            playerBundle = getCurrentTrackPosition()
+        when {
+            this.mediaPlayerHandler != null && (isPlayerPaused || mediaPlayer!!.isPlaying) -> {
+                playerBundle = getCurrentTrackPosition()
 
-            if (!isPlayerPaused) {
-                updateUI()
-            } else {
-                playerBundle.putBoolean(EXTRA_IS_PLAYER, false)
-            }
-            playerMessage.setData(playerBundle)
-            if (this.mediaPlayerHandler != null) {
-                this.mediaPlayerHandler!!.sendMessage(playerMessage)
+                if (!isPlayerPaused) {
+                    updateUI()
+                } else {
+                    playerBundle.putBoolean(EXTRA_IS_PLAYER, false)
+                }
+                playerMessage.data = playerBundle
+                if (this.mediaPlayerHandler != null) {
+                    this.mediaPlayerHandler!!.sendMessage(playerMessage)
+                }
             }
         }
     }

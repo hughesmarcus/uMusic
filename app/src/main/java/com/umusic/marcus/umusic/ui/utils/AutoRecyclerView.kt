@@ -2,7 +2,6 @@ package com.umusic.marcus.umusic.ui.utils
 
 import android.content.Context
 import android.support.v7.widget.GridLayoutManager
-import android.content.res.TypedArray
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 

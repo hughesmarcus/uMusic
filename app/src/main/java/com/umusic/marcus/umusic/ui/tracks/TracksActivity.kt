@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_tracks.*
 class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.OnOffsetChangedListener {
 
 
-
     private var tracksPresenter: TracksPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +41,26 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
         initializeViews(artist)
 
         tracksPresenter!!.onSearchTracks(artist.id!!)
+    }
+
+    private fun setupRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_tracks!!.layoutManager = linearLayoutManager
+        val adapter = TracksAdapter()
+        adapter.setItemClickListener(
+
+                itemClickListener = object : TracksAdapter.ItemClickListener {
+
+                    override fun onItemClick(tracks: List<Track>, track: Track, position: Int) {
+                        tracksPresenter!!.launchArtistDetail(tracks, track, position)
+                    }
+
+                }
+
+        )
+        rv_tracks!!.adapter = adapter
+
+        appbar_artist!!.addOnOffsetChangedListener(this)
     }
 
     override fun showLoading() {
@@ -80,11 +99,11 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
 
     override fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
         PlayerFragment.newInstance(setTracks(tracks), position)
-              .show(
-                      supportFragmentManager,
+                .show(
+                        supportFragmentManager,
 
-                       ""
-               )
+                        ""
+                )
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -100,12 +119,10 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
     }
 
     private fun onOffsetChangedState(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        if (verticalOffset == 0) {
-            hideAndShowTitleToolbar(View.GONE)
-        } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-            hideAndShowTitleToolbar(View.VISIBLE)
-        } else {
-            hideAndShowTitleToolbar(View.GONE)
+        when {
+            verticalOffset == 0 -> hideAndShowTitleToolbar(View.GONE)
+            Math.abs(verticalOffset) >= appBarLayout.totalScrollRange -> hideAndShowTitleToolbar(View.VISIBLE)
+            else -> hideAndShowTitleToolbar(View.GONE)
         }
     }
 
@@ -114,51 +131,37 @@ class TracksActivity : AppCompatActivity(), TracksPresenter.View, AppBarLayout.O
         txt_subtitle_artist!!.visibility = visibility
     }
 
-    private fun setupRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_tracks!!.layoutManager = linearLayoutManager
-        val adapter = TracksAdapter()
-        adapter.setItemClickListener(
-
-                itemClickListener = object : TracksAdapter.ItemClickListener {
-
-                    override fun onItemClick(tracks: List<Track>, track: Track, position: Int) {
-                        tracksPresenter!!.launchArtistDetail(tracks, track, position)
-                    }
-
-
-                }
-        )
-        rv_tracks!!.adapter = adapter
-
-        appbar_artist!!.addOnOffsetChangedListener(this)
-    }
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayUseLogoEnabled(false)
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setDisplayShowTitleEnabled(false)
+        when {
+            actionBar != null -> {
+                actionBar.setDisplayUseLogoEnabled(false)
+                actionBar.setDisplayHomeAsUpEnabled(true)
+                actionBar.setDisplayShowTitleEnabled(false)
+            }
         }
     }
 
     private fun initializeViews(artist: Artist) {
 
-        if (artist.images!!.size > 0) {
-            Picasso.with(this)
-                    .load(artist.images!![0].url)
-                    .transform(BlurEffectUtils(this, 20))
-                    .into(iv_collapsing_artist)
-            Picasso.with(this).load(artist.images!![0].url).into(civ_artist)
-        } else {
-            val imageHolder = "http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png"
-            civ_artist!!.visibility = View.GONE
-            Picasso.with(this)
-                    .load(imageHolder)
-                    .transform(BlurEffectUtils(this, 20))
-                    .into(iv_collapsing_artist)
+        when {
+            artist.images!!.size > 0 -> {
+                Picasso.with(this)
+                        .load(artist.images!![0].url)
+                        .transform(BlurEffectUtils(this, 20))
+                        .into(iv_collapsing_artist)
+                Picasso.with(this).load(artist.images!![0].url).into(civ_artist)
+            }
+            else -> {
+                val imageHolder = "http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png"
+                civ_artist!!.visibility = View.GONE
+                Picasso.with(this)
+                        .load(imageHolder)
+                        .transform(BlurEffectUtils(this, 20))
+                        .into(iv_collapsing_artist)
+            }
         }
 
         txt_title_artist!!.text = artist.name

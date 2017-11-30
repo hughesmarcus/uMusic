@@ -12,11 +12,12 @@ class ArtistsPresenter(private val interactor: ArtistsInteractor) : BasePresente
         view!!.showLoading()
         val disposable = interactor.searchArtists(name).subscribe({ artistsList ->
             val artists: List<Artist>? = artistsList.artists!!.items
-            if (!artists!!.isEmpty() && artists.isNotEmpty()) {
-                view!!.hideLoading()
-                view!!.renderArtists(artists)
-            } else {
-                view!!.showArtistNotFoundMessage()
+            when {
+                !artists!!.isEmpty() && artists.isNotEmpty() -> {
+                    view!!.hideLoading()
+                    view!!.renderArtists(artists)
+                }
+                else -> view!!.showArtistNotFoundMessage()
             }
         }, { throwable -> Log.v("hello",throwable.message) })
 

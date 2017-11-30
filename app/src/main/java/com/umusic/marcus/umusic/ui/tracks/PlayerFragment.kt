@@ -66,8 +66,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
 
         trackList = getTrackList(arguments.getString(TracksActivity.EXTRA_TRACKS))
         trackPosition = arguments.getInt(TracksActivity.EXTRA_TRACK_POSITION)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context))
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context))
         }
         audioPlayerPresenter.view = this
 
@@ -78,8 +78,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
     }
 
     override fun onDestroyView() {
-        if (dialog != null && retainInstance) {
-            dialog.setDismissMessage(null)
+        when {
+            dialog != null && retainInstance -> dialog.setDismissMessage(null)
         }
         audioPlayerPresenter.terminate()
         super.onDestroyView()
@@ -104,16 +104,15 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         txt_track_title_player.text = trackList!![trackPosition].name
         txt_album_title_player.text = trackList!![trackPosition].album!!.name
 
-        if (trackList!![trackPosition].album!!.images!!.isNotEmpty()) {
-            (0 until trackList!![trackPosition].album!!.images!!.size)
+        when {
+            trackList!![trackPosition].album!!.images!!.isNotEmpty() -> (0 until trackList!![trackPosition].album!!.images!!.size)
                     .filter { trackList!![trackPosition].album!!.images!!.isNotEmpty() }
                     .forEach {
                         Picasso.with(activity)
                                 .load(trackList!![trackPosition].album!!.images!![0].url)
                                 .into(iv_album_player)
                     }
-        } else {
-            Picasso.with(activity)
+            else -> Picasso.with(activity)
                     .load("http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png")
                     .into(iv_album_player)
         }
@@ -139,15 +138,15 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
-        if (isPlayerPlaying) {
-            audioPlayerService!!.noUpdateUI()
+        when {
+            isPlayerPlaying -> audioPlayerService!!.noUpdateUI()
         }
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         trackCurrentPosition = seekBar.progress
-        if (audioPlayerService != null) {
-            audioPlayerService!!.toSeekTrack(trackCurrentPosition, isPlayerPaused)
+        when {
+            audioPlayerService != null -> audioPlayerService!!.toSeekTrack(trackCurrentPosition, isPlayerPaused)
         }
     }
 
@@ -156,16 +155,19 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         val serviceIntent = Intent(activity, AudioPlayerService::class.java)
         serviceIntent.putExtra(AudioPlayerService.EXTRA_TRACK_PREVIEW_URL, trackUrl)
 
-        if (ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity) && !isPlayerPlaying) {
-            trackCurrentPosition = 0
-            activity.applicationContext.stopService(serviceIntent)
-            activity.applicationContext.startService(serviceIntent)
-        } else if (!ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity)) {
-            trackCurrentPosition = 0
-            activity.applicationContext.startService(serviceIntent)
+        when {
+            ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity) && !isPlayerPlaying -> {
+                trackCurrentPosition = 0
+                activity.applicationContext.stopService(serviceIntent)
+                activity.applicationContext.startService(serviceIntent)
+            }
+            !ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity) -> {
+                trackCurrentPosition = 0
+                activity.applicationContext.startService(serviceIntent)
+            }
         }
-        if (audioPlayerService == null) {
-            activity.applicationContext
+        when (audioPlayerService) {
+            null -> activity.applicationContext
                     .bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
         }
     }
