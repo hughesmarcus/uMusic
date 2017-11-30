@@ -11,7 +11,7 @@
 
     <string name="img_default">http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png</string>
 
-    <!-- activity tracks.xml  -->
+    <!-- activartistacks.xml  -->
 
     <string name="detail_top_tracks">Top 10 Tracks</string>
     <string name="detail_title">Artist</string>
@@ -32,5 +32,8 @@
     <string name="error_tracks_not_found">Tracks not found, please check that a correct name is entered</string>
     <string name="error_internet_connection">Please check your Internet connection!</string>
     <string name="error_server_internal">Oops,Something is wrong with the server.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

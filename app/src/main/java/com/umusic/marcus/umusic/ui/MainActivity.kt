@@ -8,7 +8,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.Constants
-import com.umusic.marcus.umusic.ui.artist.ArtistActivity
+import com.umusic.marcus.umusic.ui.artists.ArtistsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             val response = AuthenticationClient.getResponse(resultCode, intent)
             if (response.type == AuthenticationResponse.Type.TOKEN) {
                 Constants.ACCESS_TOKEN = "Bearer " + response.accessToken
-                val intent = Intent(this, ArtistActivity::class.java)
+                val intent = Intent(this, ArtistsActivity::class.java)
                 startActivity(intent)
             }
 

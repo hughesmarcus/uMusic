@@ -1,11 +1,11 @@
-package com.umusic.marcus.umusic.ui.tracks
+package com.umusic.marcus.umusic.ui.artist
 
 import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 
 
-class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<TracksPresenter.View>() {
+class ArtistPresenter(private val interactor: TracksInteractor) : BasePresenter<ArtistPresenter.View>() {
 
     override fun terminate() {
         super.terminate()
@@ -25,7 +25,7 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
         }, Throwable::printStackTrace)
     }
 
-    fun launchArtistDetail(tracks: List<Track>, track: Track, position: Int) {
+    fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
         view!!.launchTrackDetail(tracks, track, position)
     }
 

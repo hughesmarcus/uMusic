@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.artist
+package com.umusic.marcus.umusic.ui.artists
 
 import android.util.Log
 import com.umusic.marcus.umusic.data.model.Artist

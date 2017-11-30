@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.tracks
+package com.umusic.marcus.umusic.ui.player
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
+import com.umusic.marcus.umusic.ui.artist.ArtistActivity
 import com.umusic.marcus.umusic.ui.utils.ServiceUtils
 import kotlinx.android.synthetic.main.fragment_audio_player.*
 import java.util.*
@@ -64,8 +65,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         val rootView = inflater!!.inflate(R.layout.fragment_audio_player, container, false)
         ButterKnife.bind(this, rootView)
 
-        trackList = getTrackList(arguments.getString(TracksActivity.EXTRA_TRACKS))
-        trackPosition = arguments.getInt(TracksActivity.EXTRA_TRACK_POSITION)
+        trackList = getTrackList(arguments.getString(ArtistActivity.EXTRA_TRACKS))
+        trackPosition = arguments.getInt(ArtistActivity.EXTRA_TRACK_POSITION)
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context))
         }
@@ -204,8 +205,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         fun newInstance(tracks: String, position: Int): PlayerFragment {
             val playerFragment = PlayerFragment()
             val bundle = Bundle()
-            bundle.putString(TracksActivity.EXTRA_TRACKS, tracks)
-            bundle.putInt(TracksActivity.EXTRA_TRACK_POSITION, position)
+            bundle.putString(ArtistActivity.EXTRA_TRACKS, tracks)
+            bundle.putInt(ArtistActivity.EXTRA_TRACK_POSITION, position)
             playerFragment.arguments = bundle
             return playerFragment
         }

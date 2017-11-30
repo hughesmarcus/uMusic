@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.artist
+package com.umusic.marcus.umusic.ui.artists
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView

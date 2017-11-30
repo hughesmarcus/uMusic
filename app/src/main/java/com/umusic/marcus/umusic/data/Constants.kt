@@ -14,7 +14,7 @@ object Constants {
 
        const val ARTIST_SEARCH = "/v1/search?type=artist"
         const val ARTIST_TRACKS =
-                "v1/artists/{$ARTIST_ID}/top-tracks?country=SE"
+                "v1/artists/{$ARTIST_ID}/top-artist?country=SE"
     }
 
     object Params {
@@ -45,6 +45,6 @@ object Constants {
 
         val ARTISTS = "artists"
         val ITEMS = "items"
-        val TRACKS = "tracks"
+        val TRACKS = "artist"
     }
 }

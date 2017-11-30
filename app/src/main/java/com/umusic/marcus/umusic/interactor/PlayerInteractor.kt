@@ -9,7 +9,8 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import com.umusic.marcus.umusic.data.model.Track
-import com.umusic.marcus.umusic.ui.tracks.AudioPlayerService
+import com.umusic.marcus.umusic.ui.player.AudioFinishedListener
+import com.umusic.marcus.umusic.ui.player.AudioPlayerService
 
 
 class PlayerInteractor(private val trackList: List<Track>, private val context: Context) {

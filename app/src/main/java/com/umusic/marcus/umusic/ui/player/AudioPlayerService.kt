@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.tracks
+package com.umusic.marcus.umusic.ui.player
 
 import android.app.Service
 import android.content.Intent

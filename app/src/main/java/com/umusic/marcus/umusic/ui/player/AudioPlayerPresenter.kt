@@ -1,7 +1,6 @@
-package com.umusic.marcus.umusic.ui.tracks
+package com.umusic.marcus.umusic.ui.player
 
 import android.content.ServiceConnection
-import com.umusic.marcus.umusic.interactor.AudioFinishedListener
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 

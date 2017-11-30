@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.artist
+package com.umusic.marcus.umusic.ui.artists
 
 import android.app.SearchManager
 import android.content.Context
@@ -17,7 +17,7 @@ import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Artist
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.ArtistsInteractor
-import com.umusic.marcus.umusic.ui.tracks.TracksActivity
+import com.umusic.marcus.umusic.ui.artist.ArtistActivity
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -156,8 +156,8 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     }
 
     override fun launchArtistDetail(artist: Artist) {
-        val intent = Intent(context, TracksActivity::class.java)
-        intent.putExtra(TracksActivity.EXTRA_REPOSITORY, artist)
+        val intent = Intent(context, ArtistActivity::class.java)
+        intent.putExtra(ArtistActivity.EXTRA_REPOSITORY, artist)
         startActivity(intent)
     }
 

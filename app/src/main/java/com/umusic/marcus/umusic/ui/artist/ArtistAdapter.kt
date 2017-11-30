@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.tracks
+package com.umusic.marcus.umusic.ui.artist
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -15,7 +15,7 @@ import com.umusic.marcus.umusic.data.model.Track
 import java.util.*
 
 
-class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
+class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.TracksViewHolder>() {
 
     private var tracks: List<Track>? = null
     private var itemClickListener: ItemClickListener? = null

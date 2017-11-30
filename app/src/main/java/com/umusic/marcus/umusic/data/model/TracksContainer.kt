@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 class TracksContainer : Parcelable {
 
-    @SerializedName("tracks")
+    @SerializedName("artist")
     @Expose
     var tracks: List<Track>? = ArrayList()
 
