@@ -10,7 +10,7 @@ class Artists : Parcelable {
     @SerializedName("href")
     @Expose
     var href: String? = null
-    @SerializedName("categories")
+    @SerializedName("items")
     @Expose
     var items: List<Artist>? = ArrayList<Artist>()
     @SerializedName("limit")

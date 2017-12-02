@@ -11,7 +11,7 @@ class Categories : Parcelable {
     @SerializedName("href")
     @Expose
     var href: String? = null
-    @SerializedName("categories")
+    @SerializedName("items")
     @Expose
     var categories: List<Category>? = null
     @SerializedName("limit")

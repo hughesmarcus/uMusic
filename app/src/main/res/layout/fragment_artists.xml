@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+      android:orientation="vertical">
 
   <com.umusic.marcus.umusic.ui.utils.ShadowFrameLayout
       android:layout_width="match_parent"
@@ -46,16 +50,16 @@
 
       <TextView
           android:id="@+id/txt_line_artists"
+          style="@style/Theme.AppTheme.Music.TextView"
           android:text="@string/search_music_hint"
           android:textSize="@dimen/size_title"
-          style="@style/Theme.AppTheme.Music.TextView"
           />
 
       <TextView
           android:id="@+id/txt_subline_artists"
+          style="@style/Theme.AppTheme.Music.TextView"
           android:text="@string/search_artist_hint"
           android:textSize="@dimen/size_subtitle"
-          style="@style/Theme.AppTheme.Music.TextView"
           />
 
 
@@ -64,3 +68,16 @@
   </com.umusic.marcus.umusic.ui.utils.ShadowFrameLayout>
 
 </LinearLayout>
+
+  <android.support.design.widget.BottomNavigationView
+      android:id="@+id/bottom_navigation"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      app:itemBackground="@color/colorPrimary"
+      app:itemIconTint="@color/white"
+      app:itemTextColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:menu="@menu/bottom_navigation" />
+</android.support.constraint.ConstraintLayout>
