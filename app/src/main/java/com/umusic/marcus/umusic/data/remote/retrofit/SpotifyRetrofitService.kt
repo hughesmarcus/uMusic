@@ -2,9 +2,7 @@ package com.umusic.marcus.umusic.data.remote.retrofit
 
 
 import com.umusic.marcus.umusic.data.Constants
-import com.umusic.marcus.umusic.data.model.AlbumContainer
-import com.umusic.marcus.umusic.data.model.ArtistsContainer
-import com.umusic.marcus.umusic.data.model.TracksContainer
+import com.umusic.marcus.umusic.data.model.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -39,5 +37,18 @@ interface SpotifyRetrofitService {
     @GET(Constants.Endpoint.TRACK_SEARCH)
     fun searchTracks(
             @Query(Constants.Params.QUERY_SEARCH) album: String): Observable<TracksContainer>
+
+    @GET(Constants.Endpoint.CATEGORIES_BROWSE)
+    fun browseCategories(): Observable<CategoriesContainer>
+
+    @GET(Constants.Endpoint.CATEGORY_PLAYLISTS)
+    fun getCategoryPlayists(
+            @Query(Constants.Params.CATEGORY_ID) category: String): Observable<PlaylistsContainer>
+
+    @GET(Constants.Endpoint.PLAYLIST_TRACKS)
+    fun getPlaylistTracks(
+            @Query(Constants.Params.USER_ID) user: String,
+            @Query(Constants.Params.PLAYLIST_ID) playlist: String): Observable<TracksContainer>
+
 
 }

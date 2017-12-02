@@ -1,7 +1,10 @@
 package com.umusic.marcus.umusic.data
 
 import com.umusic.marcus.umusic.data.Constants.Params.ARTIST_ID
+import com.umusic.marcus.umusic.data.Constants.Params.CATEGORY_ID
+import com.umusic.marcus.umusic.data.Constants.Params.PLAYLIST_ID
 import com.umusic.marcus.umusic.data.Constants.Params.TRACK_ID
+import com.umusic.marcus.umusic.data.Constants.Params.USER_ID
 
 
 object Constants {
@@ -30,12 +33,21 @@ object Constants {
 
         const val NEW_RELEASES = "/v1/browse/new-releases"
 
+        const val CATEGORIES_BROWSE = "/v1/browse/categories"
+
+        const val CATEGORY_PLAYLISTS = "/v1/browse/categories/{$CATEGORY_ID}/playlists"
+
+        const val PLAYLIST_TRACKS = "/v1/users/{$USER_ID}/playlists/{$PLAYLIST_ID}/tracks"
+
     }
 
     object Params {
         const val QUERY_SEARCH = "q"
         const val ARTIST_ID = "artistId"
-        const val TRACK_ID = "trackID"
+        const val TRACK_ID = "trackId"
+        const val CATEGORY_ID = "categoryId"
+        const val USER_ID = "userId"
+        const val PLAYLIST_ID = "playlistId"
     }
 
     object Serialized {
@@ -60,7 +72,7 @@ object Constants {
     object Deserializer {
 
         val ARTISTS = "artists"
-        val ITEMS = "items"
+        val ITEMS = "categories"
         val TRACKS = "artist"
     }
 }

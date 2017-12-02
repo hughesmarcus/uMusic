@@ -14,4 +14,6 @@ interface SpotifyService {
     fun getArtistTracks(artistId: String): Observable<TracksContainer>
 
     fun getAlbums(artistId: String): Observable<AlbumContainer>
+
+    fun getNewReleases(): Observable<AlbumContainer>
 }
