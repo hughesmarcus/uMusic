@@ -9,6 +9,6 @@ import javax.inject.Inject
 class TracksInteractor@Inject constructor(private val spotifyService: SpotifyService) {
 
     fun loadData(artistId: String): Observable<TracksContainer> {
-        return spotifyService.getTracks(artistId)
+        return spotifyService.getArtistTracks(artistId)
     }
 }

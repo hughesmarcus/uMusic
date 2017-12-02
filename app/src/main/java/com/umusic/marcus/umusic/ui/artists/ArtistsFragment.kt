@@ -135,8 +135,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
         val actionBar = (activity as AppCompatActivity).supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true)
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_action_navigation_menu)
+
         }
     }
 
