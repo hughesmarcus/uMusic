@@ -29,6 +29,10 @@
         <item quantity="other">%d Followers</item>
     </plurals>
 
+    <!-- homeactivity.xml-->
+
+    <string name="new_release">New Releases</string>
+    <string name="genres">Genres</string>
 
     <!-- exceptions -->
     <string name="error_artist_not_found">Artist not found, please check that a correct name is entered</string>
@@ -38,5 +42,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

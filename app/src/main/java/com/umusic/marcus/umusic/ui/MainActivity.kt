@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
-import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.Constants
-import com.umusic.marcus.umusic.ui.artists.ArtistsActivity
+import com.umusic.marcus.umusic.ui.home.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE = 1337
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        // setContentView(R.layout.activity_main)
         val builder = AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI)
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             val response = AuthenticationClient.getResponse(resultCode, intent)
             if (response.type == AuthenticationResponse.Type.TOKEN) {
                 Constants.ACCESS_TOKEN = "Bearer " + response.accessToken
-                val intent = Intent(this, ArtistsActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             }
 

@@ -14,13 +14,13 @@
             android:name=".ui.artists.ArtistsActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.artist.ArtistActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <service
@@ -32,17 +32,15 @@
             android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".ui.MainActivity">
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="callback"
-                    android:scheme="spotifytestapp"/>
+                    android:scheme="spotifytestapp" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,6 +48,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_home"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AppTheme.Music"></activity>
     </application>
 
 </manifest>

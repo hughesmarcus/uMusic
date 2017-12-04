@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +11,7 @@ import butterknife.ButterKnife
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
+import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Artist
 import com.umusic.marcus.umusic.data.model.Track
@@ -22,7 +22,7 @@ import com.umusic.marcus.umusic.ui.utils.BlurEffectUtils
 import kotlinx.android.synthetic.main.activity_tracks.*
 
 
-class ArtistActivity : AppCompatActivity(), ArtistPresenter.View, AppBarLayout.OnOffsetChangedListener {
+class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffsetChangedListener {
 
 
     private var artistPresenter: ArtistPresenter? = null
@@ -30,7 +30,7 @@ class ArtistActivity : AppCompatActivity(), ArtistPresenter.View, AppBarLayout.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracks)
-
+        intNav()
         ButterKnife.bind(this)
         setupToolbar()
         setupRecyclerView()
