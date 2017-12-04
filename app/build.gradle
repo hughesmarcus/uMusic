@@ -55,7 +55,7 @@ dependencies {
     implementation elementalDependencies.circleimageview
 
     implementation roomDependencies.room
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v4:26.+'
     annotationProcessor roomDependencies.aroom
     implementation roomDependencies.rxroom
 
@@ -75,6 +75,7 @@ dependencies {
     testCompile testingDependencies.junit
     testCompile testingDependencies.mockito
     testCompile testingDependencies.robolectric
+    testCompile 'org.mockito:mockito-inline:+'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

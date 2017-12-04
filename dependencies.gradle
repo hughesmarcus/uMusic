@@ -55,8 +55,8 @@ ext {
 
 
     junitVersion = '4.12'
-    mockitoVersion = '1.10.19'
-    robolectricVersion = '3.0'
+    mockitoVersion = '+'
+    robolectricVersion = '+'
 
     testingDependencies = [
             junit      : "junit:junit:${junitVersion}",
