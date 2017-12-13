@@ -2,18 +2,21 @@ package com.umusic.marcus.umusic.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Album
+import com.umusic.marcus.umusic.data.model.Category
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
-import com.umusic.marcus.umusic.interactor.ReleaseInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractor
 import kotlinx.android.synthetic.main.activity_home.*
+
 
 class HomeActivity : BaseActivity(), HomePresenter.View {
 
 
-    private var homePresenter: HomePresenter? = null
+    lateinit var homePresenter: HomePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +24,31 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         setupToolbar()
         setupRecyclerView()
         intNav()
-        homePresenter = HomePresenter(ReleaseInteractor(SpotifyClient()))
-        homePresenter!!.view = this
+        homePresenter = HomePresenter(HomeInteractor(SpotifyClient()))
+        homePresenter.view = this
 
-        homePresenter!!.getNewReleases()
+        homePresenter.getNewReleases()
+        homePresenter.getGenres()
     }
 
     private fun setupRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_releases!!.layoutManager = linearLayoutManager
-        val adapter = ReleasesAdapter()
-        adapter.setItemClickListener(
+        rv_releases.layoutManager = linearLayoutManager
+        rv_genres.layoutManager = GridLayoutManager(this, 2)
+        val genreAdapter = GenreAdapter()
+        genreAdapter.setItemClickListener(
+
+                itemClickListener = object : GenreAdapter.ItemClickListener {
+
+                    override fun onItemClick(genres: List<Category>, genre: Category, position: Int) {
+                        // homePresenter!!.launchTrackDetail(albums, album, position)
+                    }
+
+                }
+
+        )
+        val releasesAdapter = ReleasesAdapter()
+        releasesAdapter.setItemClickListener(
 
                 itemClickListener = object : ReleasesAdapter.ItemClickListener {
 
@@ -42,7 +59,8 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
                 }
 
         )
-        rv_releases!!.adapter = adapter
+        rv_releases.adapter = releasesAdapter
+        rv_genres.adapter = genreAdapter
 
         // appbar_artist!!.addOnOffsetChangedListener(this)
     }
@@ -65,10 +83,14 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
     }
 
     override fun renderNewReleases(albums: List<Album>) {
-        val adapter = rv_releases!!.adapter as ReleasesAdapter
+        val adapter = rv_releases.adapter as ReleasesAdapter
         adapter.setTracks(albums)
         adapter.notifyDataSetChanged()
     }
 
-
+    override fun renderGenres(genres: List<Category>) {
+        val adapter = rv_genres.adapter as GenreAdapter
+        adapter.setGenres(genres)
+        adapter.notifyDataSetChanged()
+    }
 }

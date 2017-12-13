@@ -3,7 +3,7 @@ package com.umusic.marcus.umusic
 import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.AlbumContainer
 import com.umusic.marcus.umusic.data.model.Albums
-import com.umusic.marcus.umusic.interactor.ReleaseInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractor
 import com.umusic.marcus.umusic.ui.home.HomePresenter
 import io.reactivex.Observable
 import org.junit.Before
@@ -25,7 +25,7 @@ class HomePresenterTest {
     @Mock
     internal lateinit var view: HomePresenter.View
     @Mock
-    internal lateinit var interactor: ReleaseInteractor
+    internal lateinit var interactor: HomeInteractor
     @Captor
     lateinit var albums: ArgumentCaptor<List<Album>>
 

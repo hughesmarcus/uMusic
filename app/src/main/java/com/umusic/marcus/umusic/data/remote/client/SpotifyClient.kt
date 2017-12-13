@@ -2,6 +2,7 @@ package com.umusic.marcus.umusic.data.remote.client
 
 import com.umusic.marcus.umusic.data.model.AlbumContainer
 import com.umusic.marcus.umusic.data.model.ArtistsContainer
+import com.umusic.marcus.umusic.data.model.CategoriesContainer
 import com.umusic.marcus.umusic.data.model.TracksContainer
 import com.umusic.marcus.umusic.data.remote.retrofit.SpotifyRetrofitClient
 import io.reactivex.Observable
@@ -30,6 +31,12 @@ class SpotifyClient : SpotifyRetrofitClient(), SpotifyService {
 
     override fun search(query: String): Observable<ArtistsContainer> {
         return spotifyService!!.searchArtist(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun browseCategories(): Observable<CategoriesContainer> {
+        return spotifyService!!.browseCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

@@ -28,11 +28,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_marginTop="?attr/actionBarSize"
         tools:context="com.umusic.marcus.umusic.ui.home.HomeActivityFragment"
         tools:showIn="@layout/activity_home">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/new_releases"
             android:layout_width="206dp"
             android:layout_height="41dp"
             android:layout_marginEnd="8dp"
@@ -52,10 +54,10 @@
             android:layout_height="wrap_content"
             android:scrollbars="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/new_releases" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/genre"
             android:layout_width="121dp"
             android:layout_height="35dp"
             android:layout_marginEnd="8dp"
@@ -68,21 +70,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/rv_releases" />
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/gridview"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_genres"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="268dp"
-            android:columnWidth="90dp"
-            android:horizontalSpacing="10dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/genre" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.BottomNavigationView

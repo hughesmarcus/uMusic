@@ -1,3 +1,12 @@
 <resources>>
 
+    <style name="Theme.AppTheme.Music.HeaderBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:elevation">@dimen/headerbar_elevation</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:orientation">vertical</item>
+        <item name="windowActionBar">false</item>
+    </style>
 </resources>
