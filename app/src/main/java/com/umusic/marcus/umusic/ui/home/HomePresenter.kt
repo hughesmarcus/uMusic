@@ -35,11 +35,21 @@ class HomePresenter(private val interactor: HomeInteractor) : BasePresenter<Home
         }, Throwable::printStackTrace)
     }
 
+    fun launchAlbumDetail(album: Album) {
+        view!!.launchAlbumDetail(album)
+    }
+
+    fun launchGenreDetail(category: Category) {
+        view!!.launchGenreDetail(category)
+    }
+
     interface View : BasePresenter.View {
 
 
         fun renderNewReleases(albums: List<Album>)
         fun renderGenres(genres: List<Category>)
+        fun launchAlbumDetail(album: Album)
+        fun launchGenreDetail(category: Category)
 
     }
 }

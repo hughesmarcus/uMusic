@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTextListener {
 
-
+    lateinit var searchView: SearchView
     lateinit var artistsPresenter: ArtistsPresenter
     @BindView(R.id.rv_artists)
     lateinit var rv_artist: RecyclerView
@@ -71,6 +71,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
 
     override fun onQueryTextSubmit(query: String): Boolean {
         artistsPresenter.onSearchArtist(query)
+        searchView.clearFocus()
         return true
     }
 
@@ -123,7 +124,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
 
     private fun setupSearchView(menu: Menu) {
         val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.menu_search).actionView as SearchView
+        searchView = menu.findItem(R.id.menu_search).actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.componentName))
         searchView.queryHint = getString(R.string.search_hint)
         searchView.maxWidth = toolbar!!.width

@@ -28,6 +28,7 @@
 
     <dimen name="audio_player_btn_size">60dp</dimen>
     <dimen name="audio_player_btn_margin">5dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 
 </resources>
