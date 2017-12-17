@@ -17,6 +17,7 @@ class HomeActivity : BaseActivity() {
         intNav()
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container, HomeFragment.newInstance())
+        ft.addToBackStack("home")
         ft.commit()
     }
 

@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 Constants.ACCESS_TOKEN = "Bearer " + response.accessToken
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             }
 
         }

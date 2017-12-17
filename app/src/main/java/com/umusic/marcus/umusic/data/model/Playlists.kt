@@ -1,6 +1,5 @@
 package com.umusic.marcus.umusic.data.model
 
-import android.content.ClipData.Item
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
@@ -14,7 +13,7 @@ class Playlists : Parcelable {
     var href: String? = null
     @SerializedName("items")
     @Expose
-    var items: List<Item>? = null
+    var items: List<Playlist>? = null
     @SerializedName("limit")
     @Expose
     var limit: Int? = null

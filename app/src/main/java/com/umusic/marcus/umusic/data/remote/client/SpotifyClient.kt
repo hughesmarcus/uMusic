@@ -1,9 +1,6 @@
 package com.umusic.marcus.umusic.data.remote.client
 
-import com.umusic.marcus.umusic.data.model.AlbumContainer
-import com.umusic.marcus.umusic.data.model.ArtistsContainer
-import com.umusic.marcus.umusic.data.model.CategoriesContainer
-import com.umusic.marcus.umusic.data.model.TracksContainer
+import com.umusic.marcus.umusic.data.model.*
 import com.umusic.marcus.umusic.data.remote.retrofit.SpotifyRetrofitClient
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,6 +34,12 @@ class SpotifyClient : SpotifyRetrofitClient(), SpotifyService {
 
     override fun browseCategories(): Observable<CategoriesContainer> {
         return spotifyService!!.browseCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getCategoriesPlaylists(category: String): Observable<PlaylistsContainer> {
+        return spotifyService!!.getCategoryPlayists(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

@@ -31,7 +31,8 @@ class HomeFragment : Fragment(), HomePresenter.View {
     override fun launchGenreDetail(category: Category) {
 
         val ft = activity.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, PlaylistFragment.newInstance(category))
+        ft.add(R.id.fragment_container, PlaylistsFragment.newInstance(category))
+        ft.addToBackStack("genre")
         ft.commit()
 
     }
@@ -68,6 +69,7 @@ class HomeFragment : Fragment(), HomePresenter.View {
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_releases.layoutManager = linearLayoutManager
         rv_genres.layoutManager = GridLayoutManager(context, 2)
+
         val genreAdapter = GenreAdapter()
         genreAdapter.setItemClickListener(
 
@@ -94,7 +96,7 @@ class HomeFragment : Fragment(), HomePresenter.View {
         )
         rv_releases.adapter = releasesAdapter
         rv_genres.adapter = genreAdapter
-
+        rv_genres.isNestedScrollingEnabled = false
         // appbar_artist!!.addOnOffsetChangedListener(this)
     }
 

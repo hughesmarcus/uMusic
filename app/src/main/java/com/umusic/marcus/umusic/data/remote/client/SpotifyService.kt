@@ -1,10 +1,7 @@
 package com.umusic.marcus.umusic.data.remote.client
 
 
-import com.umusic.marcus.umusic.data.model.AlbumContainer
-import com.umusic.marcus.umusic.data.model.ArtistsContainer
-import com.umusic.marcus.umusic.data.model.CategoriesContainer
-import com.umusic.marcus.umusic.data.model.TracksContainer
+import com.umusic.marcus.umusic.data.model.*
 import io.reactivex.Observable
 
 
@@ -19,4 +16,6 @@ interface SpotifyService {
     fun getNewReleases(): Observable<AlbumContainer>
 
     fun browseCategories(): Observable<CategoriesContainer>
+
+    fun getCategoriesPlaylists(category: String): Observable<PlaylistsContainer>
 }
