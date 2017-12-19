@@ -31,8 +31,8 @@ class HomeFragment : Fragment(), HomePresenter.View {
     override fun launchGenreDetail(category: Category) {
 
         val ft = activity.supportFragmentManager.beginTransaction()
-        ft.add(R.id.fragment_container, PlaylistsFragment.newInstance(category))
-        ft.addToBackStack("genre")
+        ft.replace(R.id.fragment_container, PlaylistsFragment.newInstance(category))
+        ft.addToBackStack(null)
         ft.commit()
 
     }

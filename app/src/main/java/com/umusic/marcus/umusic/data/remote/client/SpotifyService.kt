@@ -18,4 +18,6 @@ interface SpotifyService {
     fun browseCategories(): Observable<CategoriesContainer>
 
     fun getCategoriesPlaylists(category: String): Observable<PlaylistsContainer>
+
+    fun getPlaylistTracks(owner: String, playlist: String): Observable<PlaylistTracksContainer>
 }

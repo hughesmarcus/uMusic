@@ -8,6 +8,12 @@ import io.reactivex.schedulers.Schedulers
 
 
 class SpotifyClient : SpotifyRetrofitClient(), SpotifyService {
+    override fun getPlaylistTracks(owner: String, playlist: String): Observable<PlaylistTracksContainer> {
+        return spotifyService!!.getPlaylistTracks(owner, playlist)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
     override fun getNewReleases(): Observable<AlbumContainer> {
         return spotifyService!!.getNewReleases()
                 .subscribeOn(Schedulers.io())

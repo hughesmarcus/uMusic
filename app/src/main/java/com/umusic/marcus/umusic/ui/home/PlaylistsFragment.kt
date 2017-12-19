@@ -12,20 +12,17 @@ import com.umusic.marcus.umusic.data.model.Category
 import com.umusic.marcus.umusic.data.model.Playlist
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.PlaylistInteractor
+import com.umusic.marcus.umusic.ui.tracks.TracksFragment
 import kotlinx.android.synthetic.main.fragment_playlists.*
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
+    override fun launchPlaylistDetail(playlist: Playlist) {
+        val ft = activity.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, TracksFragment.newInstance(playlist))
+        ft.addToBackStack(null)
+        ft.commit()
+    }
+
     override fun renderPlaylists(playlists: List<Playlist>) {
         val adapter = rv_playlists.adapter as PlaylistsAdapter
         adapter.setGenres(playlists)

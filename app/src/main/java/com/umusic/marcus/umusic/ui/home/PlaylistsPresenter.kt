@@ -9,7 +9,7 @@ import com.umusic.marcus.umusic.ui.BasePresenter
 class PlaylistsPresenter(private val interactor: PlaylistInteractor) : BasePresenter<PlaylistsPresenter.View>() {
 
     fun launchPlaylistDetail(playlist: Playlist) {
-
+        view!!.launchPlaylistDetail(playlist)
     }
 
     fun getPlaylsts(category: Category) {
@@ -26,6 +26,7 @@ class PlaylistsPresenter(private val interactor: PlaylistInteractor) : BasePrese
 
     interface View : BasePresenter.View {
         fun renderPlaylists(playlists: List<Playlist>)
+        fun launchPlaylistDetail(playlist: Playlist)
 
 
     }

@@ -48,7 +48,7 @@ interface SpotifyRetrofitService {
     @GET(Constants.Endpoint.PLAYLIST_TRACKS)
     fun getPlaylistTracks(
             @Path(Constants.Params.USER_ID) user: String,
-            @Path(Constants.Params.PLAYLIST_ID) playlist: String): Observable<TracksContainer>
+            @Path(Constants.Params.PLAYLIST_ID) playlist: String): Observable<PlaylistTracksContainer>
 
 
 }

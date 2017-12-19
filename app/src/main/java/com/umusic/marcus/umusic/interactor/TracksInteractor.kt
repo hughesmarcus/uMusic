@@ -1,5 +1,6 @@
 package com.umusic.marcus.umusic.interactor
 
+import com.umusic.marcus.umusic.data.model.PlaylistTracksContainer
 import com.umusic.marcus.umusic.data.model.TracksContainer
 import com.umusic.marcus.umusic.data.remote.client.SpotifyService
 import io.reactivex.Observable
@@ -10,5 +11,9 @@ class TracksInteractor@Inject constructor(private val spotifyService: SpotifySer
 
     fun loadData(artistId: String): Observable<TracksContainer> {
         return spotifyService.getArtistTracks(artistId)
+    }
+
+    fun loadPlaylistTracks(owner: String, playlist: String): Observable<PlaylistTracksContainer> {
+        return spotifyService.getPlaylistTracks(owner, playlist)
     }
 }
