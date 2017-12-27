@@ -1,6 +1,7 @@
 package com.umusic.marcus.umusic.ui.tracks
 
 import com.umusic.marcus.umusic.data.model.Item
+import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 
@@ -19,10 +20,12 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
 
         }, Throwable::printStackTrace)
     }
-
+    fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
+        view!!.launchTrack(tracks, track, position)
+    }
     interface View : BasePresenter.View {
         fun renderTracks(tracks: List<Item>)
-        fun launchTrack()
+        fun launchTrack(tracks: List<Track>, track: Track, position: Int)
         fun launchTrackOptions()
 
 

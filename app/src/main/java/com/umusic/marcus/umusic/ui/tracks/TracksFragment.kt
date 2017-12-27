@@ -10,18 +10,14 @@ import android.view.ViewGroup
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Item
 import com.umusic.marcus.umusic.data.model.Playlist
+import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.TracksInteractor
+import com.umusic.marcus.umusic.ui.player.PlayerFragment
+import com.umusic.marcus.umusic.ui.utils.TracksUtil
 import kotlinx.android.synthetic.main.fragment_tracks.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TracksFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TracksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class TracksFragment : Fragment(), TracksPresenter.View {
     override fun renderTracks(tracks: List<Item>) {
         val adapter = rv_tracks.adapter as TracksAdapter
@@ -29,8 +25,13 @@ class TracksFragment : Fragment(), TracksPresenter.View {
         adapter.notifyDataSetChanged()
     }
 
-    override fun launchTrack() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun launchTrack(tracks: List<Track>, track: Track, position: Int) {
+        PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
+                .show(
+                        activity.supportFragmentManager,
+
+                        ""
+                )
     }
 
     override fun launchTrackOptions() {
@@ -74,7 +75,11 @@ class TracksFragment : Fragment(), TracksPresenter.View {
                 itemClickListener = object : TracksAdapter.ItemClickListener {
 
                     override fun onItemClick(tracks: List<Item>, track: Item, position: Int) {
-
+                        val tracklist: List<Track> = emptyList()
+                        for(track in tracks){
+                            tracklist.plus(track.track)
+                        }
+                        tracksPresenter!!.launchTrackDetail(tracklist, track.track!!, position)
                     }
 
                 }

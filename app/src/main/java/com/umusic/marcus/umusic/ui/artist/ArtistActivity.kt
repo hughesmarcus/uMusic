@@ -19,6 +19,7 @@ import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.player.PlayerFragment
 import com.umusic.marcus.umusic.ui.utils.BlurEffectUtils
+import com.umusic.marcus.umusic.ui.utils.TracksUtil
 import kotlinx.android.synthetic.main.activity_tracks.*
 
 
@@ -99,7 +100,7 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
     }
 
     override fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
-        PlayerFragment.newInstance(setTracks(tracks), position)
+        PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
                 .show(
                         supportFragmentManager,
 
@@ -172,13 +173,6 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
         txt_followers_artist!!.text = totalFollowers
     }
 
-    private fun setTracks(tracks: List<Track>): String {
-        val gson = GsonBuilder().create()
-        val trackType = object : TypeToken<List<Track>>() {
-
-        }.type
-        return gson.toJson(tracks, trackType)
-    }
 
     override fun context(): Context {
         return this@ArtistActivity

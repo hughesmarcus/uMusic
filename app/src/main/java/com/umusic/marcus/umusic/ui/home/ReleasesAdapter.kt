@@ -34,29 +34,30 @@ class ReleasesAdapter : RecyclerView.Adapter<ReleasesAdapter.AlbumsViewHolder>()
     override fun onBindViewHolder(holder: AlbumsViewHolder, position: Int) {
         val album = albums!![position]
 
-
-        holder.txt_album_name!!.text = album.name
-        if (album.images!!.isNotEmpty()) {
-            holder.imageView!!.scaleType = ImageView.ScaleType.FIT_XY
-            for (i in 0 until album.images!!.size) {
-                if (album.images!!.isNotEmpty()) {
-                    Picasso.with(holder.imageView!!.context)
-                            .load(album.images!![0].url)
-                            .into(holder.imageView)
+        if(album != null) {
+            holder.txt_album_name!!.text = album.name
+            if (album.images!!.isNotEmpty()) {
+                holder.imageView!!.scaleType = ImageView.ScaleType.FIT_XY
+                for (i in 0 until album.images!!.size) {
+                    if (album.images!!.isNotEmpty()) {
+                        Picasso.with(holder.imageView!!.context)
+                                .load(album.images!![0].url)
+                                .into(holder.imageView)
+                    }
                 }
-            }
-        } else {
+            } else {
 
-            Picasso.with(holder.imageView!!.context)
-                    .load("http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png")
-                    .into(holder.imageView)
+                Picasso.with(holder.imageView!!.context)
+                        .load("http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png")
+                        .into(holder.imageView)
+            }
+
+            holder.itemView.setOnClickListener({
+                if (itemClickListener != null) {
+                    itemClickListener!!.onItemClick(albums!!, album, position)
+                }
+            })
         }
-
-        holder.itemView.setOnClickListener({
-            if (itemClickListener != null) {
-                itemClickListener!!.onItemClick(albums!!, album, position)
-            }
-        })
     }
 
     override fun getItemCount(): Int {

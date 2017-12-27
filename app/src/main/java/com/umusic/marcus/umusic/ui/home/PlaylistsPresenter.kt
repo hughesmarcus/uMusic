@@ -12,7 +12,7 @@ class PlaylistsPresenter(private val interactor: PlaylistInteractor) : BasePrese
         view!!.launchPlaylistDetail(playlist)
     }
 
-    fun getPlaylsts(category: Category) {
+    fun getPlaylists(category: Category) {
         interactor.loadCategoryPlaylists(category.id!!).subscribe({ playlistsList ->
             val playlists: List<Playlist>? = playlistsList.playlists!!.items
             if (!playlists!!.isEmpty()) {

@@ -59,7 +59,7 @@ class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
         playlistsPresenter = PlaylistsPresenter(PlaylistInteractor(SpotifyClient()))
         playlistsPresenter.view = this
 
-        playlistsPresenter.getPlaylsts(category)
+        playlistsPresenter.getPlaylists(category)
     }
 
     private fun setupRecyclerView() {

@@ -3,11 +3,15 @@ package com.umusic.marcus.umusic.ui
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 import com.umusic.marcus.umusic.data.Constants
 import com.umusic.marcus.umusic.ui.home.HomeActivity
+import android.R.attr.duration
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
+            }else{
+                val duration = Toast.LENGTH_LONG
+
+                val toast = Toast.makeText(this, response.error, duration)
+                toast.show()
             }
 
         }

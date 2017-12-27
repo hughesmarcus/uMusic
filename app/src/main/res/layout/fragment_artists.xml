@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
       android:orientation="vertical">
 
-  <com.umusic.marcus.umusic.ui.utils.ShadowFrameLayout
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/light_grey"
@@ -65,7 +65,7 @@
 
     </LinearLayout>
 
-  </com.umusic.marcus.umusic.ui.utils.ShadowFrameLayout>
+  </FrameLayout>
 
 </LinearLayout>
 
