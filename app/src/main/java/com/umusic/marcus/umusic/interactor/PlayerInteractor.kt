@@ -74,14 +74,21 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
     }
 
     private fun changeTrack(trackPosition: Int) {
+        var trackNumber = trackPosition
         isPlayerPlaying = true
         isPlayerPaused = false
-        if (trackList[trackPosition].album == null) {
-            audioFinishedListener!!.onSetTrackPlayer(trackPosition)
-        } else {
-            audioFinishedListener!!.onSetInfoTrackPlayer(trackPosition)
+        while (trackList[trackNumber].previewUrl == null && trackNumber < trackList.size) {
+            trackNumber++
         }
-        audioPlayerService!!.setTrackPreviewUrl(trackList[trackPosition].previewUrl!!)
+        if (trackList[trackNumber].previewUrl == null) {
+            destroyAudioService()
+        }
+        if (trackList[trackNumber].album == null) {
+            audioFinishedListener!!.onSetTrackPlayer(trackNumber)
+        } else {
+            audioFinishedListener!!.onSetInfoTrackPlayer(trackNumber)
+        }
+        audioPlayerService!!.setTrackPreviewUrl(trackList[trackNumber].previewUrl!!)
         audioPlayerService!!.noUpdateUI()
         audioPlayerService!!.onPlayAudio(0)
         audioFinishedListener!!.onResetTrackDuration()
