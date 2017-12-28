@@ -14,6 +14,7 @@ import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Category
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.ui.tracks.TracksFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -25,7 +26,10 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment(), HomePresenter.View {
 
     override fun launchAlbumDetail(album: Album) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val ft = activity.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, TracksFragment.newInstance(album))
+        ft.addToBackStack(null)
+        ft.commit()
     }
 
     override fun launchGenreDetail(category: Category) {
@@ -88,7 +92,8 @@ class HomeFragment : Fragment(), HomePresenter.View {
                 itemClickListener = object : ReleasesAdapter.ItemClickListener {
 
                     override fun onItemClick(albums: List<Album>, album: Album, position: Int) {
-                        // homePresenter!!.launchTrackDetail(albums, album, position)
+                        homePresenter.launchAlbumDetail(album)
+
                     }
 
                 }
@@ -97,7 +102,6 @@ class HomeFragment : Fragment(), HomePresenter.View {
         rv_releases.adapter = releasesAdapter
         rv_genres.adapter = genreAdapter
         rv_genres.isNestedScrollingEnabled = false
-        // appbar_artist!!.addOnOffsetChangedListener(this)
     }
 
 
@@ -117,4 +121,4 @@ class HomeFragment : Fragment(), HomePresenter.View {
         adapter.notifyDataSetChanged()
     }
 
-}// Required empty public constructor
+}

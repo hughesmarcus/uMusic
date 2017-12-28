@@ -7,7 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Item
 import com.umusic.marcus.umusic.data.model.Playlist
 import com.umusic.marcus.umusic.data.model.Track
@@ -25,13 +27,28 @@ class TracksFragment : Fragment(), TracksPresenter.View {
         adapter.notifyDataSetChanged()
     }
 
-    override fun launchTrack(tracks: List<Track>, track: Track, position: Int) {
-        PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
-                .show(
-                        activity.supportFragmentManager,
+    override fun renderAlbumTracks(tracks: List<Track>) {
+        val adapter = rv_tracks.adapter as AlbumTracksAdapter
+        adapter.setTracks(tracks)
+        adapter.notifyDataSetChanged()
+    }
 
-                        ""
-                )
+    override fun launchTrack(tracks: List<Track>, track: Track, position: Int) {
+        when {
+            arguments.containsKey(PLAYLIST) ->
+                PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
+                        .show(
+                                activity.supportFragmentManager,
+
+                                ""
+                        )
+            else -> PlayerFragment.newInstance(album, TracksUtil.setTracks(tracks), position)
+                    .show(
+                            activity.supportFragmentManager,
+
+                            ""
+                    )
+        }
     }
 
     override fun launchTrackOptions() {
@@ -45,11 +62,16 @@ class TracksFragment : Fragment(), TracksPresenter.View {
 
     private var PLAYLIST = "playlist"
     private lateinit var playlist: Playlist
+    private val ALBUM = "album"
     private lateinit var tracksPresenter: TracksPresenter
+    private lateinit var album: Album
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        playlist = arguments.getParcelable(PLAYLIST)
+        when {
+            arguments.containsKey(PLAYLIST) -> playlist = arguments.getParcelable(PLAYLIST)
+            else -> album = arguments.getParcelable(ALBUM)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -62,38 +84,74 @@ class TracksFragment : Fragment(), TracksPresenter.View {
         setupRecyclerView()
         tracksPresenter = TracksPresenter(TracksInteractor(SpotifyClient()))
         tracksPresenter.view = this
+        when {
+            arguments.containsKey(PLAYLIST) -> tracksPresenter.getTracks(playlist.owner!!.id!!, playlist.id!!)
+            else -> tracksPresenter.getAlbumTracks(album.id!!)
+        }
 
-        tracksPresenter.getTracks(playlist.owner!!.id!!, playlist.id!!)
     }
 
     private fun setupRecyclerView() {
 
         rv_tracks.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val tracksAdapter = TracksAdapter()
-        tracksAdapter.setItemClickListener(
+        when {
+            arguments.containsKey(PLAYLIST) -> {
+                val tracksAdapter = TracksAdapter()
+                tracksAdapter.setItemClickListener(
 
-                itemClickListener = object : TracksAdapter.ItemClickListener {
+                        itemClickListener = object : TracksAdapter.ItemClickListener {
 
-                    override fun onItemClick(tracks: List<Item>, track: Item, position: Int) {
-                        val tracklist: List<Track> = emptyList()
-                        for(track in tracks){
-                            tracklist.plus(track.track)
+                            override fun onItemClick(tracks: List<Item>, track: Item, position: Int) {
+                                if (track.track!!.previewUrl != null) {
+                                    val tracklist: MutableList<Track> = mutableListOf<Track>()
+                                    tracks.mapTo(tracklist) { it.track!! }
+                                    tracksPresenter.launchTrackDetail(tracklist, track.track!!, position)
+                                } else {
+                                    val toast = Toast.makeText(activity, "This track is not available", Toast.LENGTH_LONG)
+                                    toast.show()
+                                }
+                            }
+
                         }
-                        tracksPresenter!!.launchTrackDetail(tracklist, track.track!!, position)
-                    }
 
-                }
+                )
+                rv_tracks.adapter = tracksAdapter
+            }
+            else -> {
+                val tracksAlbumAdapter = AlbumTracksAdapter()
+                tracksAlbumAdapter.setItemClickListener(
 
-        )
+                        itemClickListener = object : AlbumTracksAdapter.ItemClickListener {
 
-        rv_tracks.adapter = tracksAdapter
+                            override fun onItemClick(tracks: List<Track>, track: Track, position: Int) {
+                                if (track.previewUrl != null) {
+                                    tracksPresenter.launchTrackDetail(tracks, track, position)
+                                } else {
+                                    val toast = Toast.makeText(activity, "This track is not available", Toast.LENGTH_LONG)
+                                    toast.show()
+                                }
+                            }
 
-        // appbar_artist!!.addOnOffsetChangedListener(this)
+                        }
+
+                )
+                rv_tracks.adapter = tracksAlbumAdapter
+            }
+        }
+
+
     }
 
     companion object {
         private val PLAYLIST = "playlist"
-
+        private val ALBUM = "album"
+        fun newInstance(album: Album): TracksFragment {
+            val fragment = TracksFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(ALBUM, album)
+            fragment.arguments = bundle
+            return fragment
+        }
         fun newInstance(playlist: Playlist): TracksFragment {
             val fragment = TracksFragment()
             val bundle = Bundle()
@@ -102,4 +160,4 @@ class TracksFragment : Fragment(), TracksPresenter.View {
             return fragment
         }
     }
-}// Required empty public constructor
+}

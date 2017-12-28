@@ -50,5 +50,11 @@ class SpotifyClient : SpotifyRetrofitClient(), SpotifyService {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun getAlbumTracks(album: String): Observable<TracksContainer> {
+        return spotifyService!!.getAlbumTracks(album)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
 
 }

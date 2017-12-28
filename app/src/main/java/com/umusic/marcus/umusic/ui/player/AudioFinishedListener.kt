@@ -17,5 +17,7 @@ interface AudioFinishedListener {
 
     fun onSetInfoTrackPlayer(trackPosition: Int)
 
+    fun onSetTrackPlayer(trackPosition: Int)
+
     fun onServiceConnection(serviceConnection: ServiceConnection)
 }

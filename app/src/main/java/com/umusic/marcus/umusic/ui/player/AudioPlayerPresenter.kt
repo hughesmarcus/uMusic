@@ -1,6 +1,7 @@
 package com.umusic.marcus.umusic.ui.player
 
 import android.content.ServiceConnection
+import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 
@@ -33,6 +34,10 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
         view!!.setInfoTrackPlayer(trackPosition)
     }
 
+    fun setInfoMediaPlayer(trackPosition: Int, album: Album) {
+        view!!.setInfoTrackPlayer(trackPosition, album)
+    }
+
     override fun terminate() {
         super.terminate()
         playerInteractor.destroyAudioService()
@@ -59,6 +64,10 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
        view!!.onResetTrackDuration()
     }
 
+    override fun onSetTrackPlayer(trackPosition: Int) {
+        view!!.setTrackPlayer(trackPosition)
+    }
+
     override fun onSetInfoTrackPlayer(trackPosition: Int) {
         view!!.setInfoTrackPlayer(trackPosition)
     }
@@ -82,5 +91,9 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
         fun setTimeFinished(audioPlayerService: AudioPlayerService)
 
         fun onResetTrackDuration()
+
+        fun setInfoTrackPlayer(trackPosition: Int, album: Album)
+
+        fun setTrackPlayer(trackPosition: Int)
     }
 }

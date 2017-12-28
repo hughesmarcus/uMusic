@@ -20,4 +20,6 @@ interface SpotifyService {
     fun getCategoriesPlaylists(category: String): Observable<PlaylistsContainer>
 
     fun getPlaylistTracks(owner: String, playlist: String): Observable<PlaylistTracksContainer>
+
+    fun getAlbumTracks(album: String): Observable<TracksContainer>
 }

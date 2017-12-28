@@ -10,6 +10,9 @@ class TracksContainer : Parcelable {
     @SerializedName("tracks")
     @Expose
     var tracks: List<Track>? = ArrayList()
+    @SerializedName("items")
+    @Expose
+    var albumTracks: List<Track>? = ArrayList()
 
     protected constructor(`in`: Parcel) {
         `in`.readList(this.tracks, com.umusic.marcus.umusic.data.model.Track::class.java.classLoader)

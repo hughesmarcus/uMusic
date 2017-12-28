@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.artist.ArtistActivity
@@ -71,8 +72,13 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context))
         }
         audioPlayerPresenter.view = this
-
-        audioPlayerPresenter.setInfoMediaPlayer(trackPosition)
+        when {
+            arguments.containsKey("album") -> {
+                val album = arguments.getParcelable<Album>("album")
+                audioPlayerPresenter.setInfoMediaPlayer(trackPosition, album)
+            }
+            else -> audioPlayerPresenter.setInfoMediaPlayer(trackPosition)
+        }
         audioPlayerPresenter.onStartAudioService(trackList!![trackPosition].previewUrl!!)
 
         return rootView
@@ -101,6 +107,10 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         audioPlayerPresenter.onPlayPauseTrack()
     }
 
+    override fun setTrackPlayer(trackPosition: Int) {
+        txt_track_title_player.text = trackList!![trackPosition].name
+    }
+
     override fun setInfoTrackPlayer(trackPosition: Int) {
         txt_track_title_player.text = trackList!![trackPosition].name
         txt_album_title_player.text = trackList!![trackPosition].album!!.name
@@ -119,6 +129,23 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         }
     }
 
+    override fun setInfoTrackPlayer(trackPosition: Int, album: Album) {
+        txt_track_title_player.text = trackList!![trackPosition].name
+        txt_album_title_player.text = album.name
+
+        when {
+            album.images!!.isNotEmpty() -> (0 until album.images!!.size)
+                    .filter { album.images!!.isNotEmpty() }
+                    .forEach {
+                        Picasso.with(activity)
+                                .load(album.images!![0].url)
+                                .into(iv_album_player)
+                    }
+            else -> Picasso.with(activity)
+                    .load("http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png")
+                    .into(iv_album_player)
+        }
+    }
     override fun onDestroy() {
         audioPlayerPresenter.terminate()
         super.onDestroy()
@@ -202,6 +229,17 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
     }
 
     companion object {
+        fun newInstance(album: Album, tracks: String, position: Int): PlayerFragment {
+            val ALBUM = "album"
+            val playerFragment = PlayerFragment()
+            val bundle = Bundle()
+            bundle.putString(ArtistActivity.EXTRA_TRACKS, tracks)
+            bundle.putInt(ArtistActivity.EXTRA_TRACK_POSITION, position)
+            bundle.putParcelable(ALBUM, album)
+            playerFragment.arguments = bundle
+            return playerFragment
+        }
+
         fun newInstance(tracks: String, position: Int): PlayerFragment {
             val playerFragment = PlayerFragment()
             val bundle = Bundle()

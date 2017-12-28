@@ -32,7 +32,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
         }
     }
 }
@@ -55,14 +60,13 @@ dependencies {
     implementation elementalDependencies.circleimageview
 
     implementation roomDependencies.room
-    implementation 'com.android.support:support-v4:26.+'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation supportDependencies.support
+
     annotationProcessor roomDependencies.aroom
     implementation roomDependencies.rxroom
 
 
     implementation "com.jakewharton:butterknife:8.5.1"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt "com.jakewharton:butterknife-compiler:8.5.1"
 
     implementation 'com.google.dagger:dagger:2+'

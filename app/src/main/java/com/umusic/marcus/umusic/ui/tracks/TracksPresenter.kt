@@ -20,6 +20,18 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
 
         }, Throwable::printStackTrace)
     }
+
+    fun getAlbumTracks(album: String) {
+        interactor.loadAlbumTracks(album).subscribe({ tracksList ->
+            val tracks: List<Track>? = tracksList.albumTracks
+            if (!tracks!!.isEmpty()) {
+                view!!.renderAlbumTracks(tracks)
+            } else {
+
+            }
+
+        }, Throwable::printStackTrace)
+    }
     fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
         view!!.launchTrack(tracks, track, position)
     }
@@ -27,6 +39,7 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
         fun renderTracks(tracks: List<Item>)
         fun launchTrack(tracks: List<Track>, track: Track, position: Int)
         fun launchTrackOptions()
+        fun renderAlbumTracks(tracks: List<Track>)
 
 
     }

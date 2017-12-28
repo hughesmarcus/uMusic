@@ -16,4 +16,8 @@ class TracksInteractor@Inject constructor(private val spotifyService: SpotifySer
     fun loadPlaylistTracks(owner: String, playlist: String): Observable<PlaylistTracksContainer> {
         return spotifyService.getPlaylistTracks(owner, playlist)
     }
+
+    fun loadAlbumTracks(album: String): Observable<TracksContainer> {
+        return spotifyService.getAlbumTracks(album)
+    }
 }

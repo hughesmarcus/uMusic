@@ -7,9 +7,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import butterknife.ButterKnife
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
@@ -54,7 +53,13 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
                 itemClickListener = object : ArtistAdapter.ItemClickListener {
 
                     override fun onItemClick(tracks: List<Track>, track: Track, position: Int) {
-                        artistPresenter!!.launchTrackDetail(tracks, track, position)
+
+                        if (track.previewUrl != null) {
+                            artistPresenter!!.launchTrackDetail(tracks, track, position)
+                        } else {
+                            val toast = Toast.makeText(context(), "This track is not available", Toast.LENGTH_LONG)
+                            toast.show()
+                        }
                     }
 
                 }

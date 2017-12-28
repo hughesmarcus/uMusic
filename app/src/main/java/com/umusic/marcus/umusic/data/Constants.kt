@@ -1,5 +1,6 @@
 package com.umusic.marcus.umusic.data
 
+import com.umusic.marcus.umusic.data.Constants.Params.ALBUM_ID
 import com.umusic.marcus.umusic.data.Constants.Params.ARTIST_ID
 import com.umusic.marcus.umusic.data.Constants.Params.CATEGORY_ID
 import com.umusic.marcus.umusic.data.Constants.Params.PLAYLIST_ID
@@ -39,6 +40,8 @@ object Constants {
 
         const val PLAYLIST_TRACKS = "/v1/users/{$USER_ID}/playlists/{$PLAYLIST_ID}/tracks"
 
+        const val ALBUM_TRACKS = "/v1/albums/{$ALBUM_ID}/tracks"
+
     }
 
     object Params {
@@ -48,6 +51,7 @@ object Constants {
         const val CATEGORY_ID = "categoryId"
         const val USER_ID = "userId"
         const val PLAYLIST_ID = "playlistId"
+        const val ALBUM_ID = "albumId"
     }
 
     object Serialized {

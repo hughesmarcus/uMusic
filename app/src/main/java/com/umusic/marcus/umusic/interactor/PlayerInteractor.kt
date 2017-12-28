@@ -76,7 +76,11 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
     private fun changeTrack(trackPosition: Int) {
         isPlayerPlaying = true
         isPlayerPaused = false
-        audioFinishedListener!!.onSetInfoTrackPlayer(trackPosition)
+        if (trackList[trackPosition].album == null) {
+            audioFinishedListener!!.onSetTrackPlayer(trackPosition)
+        } else {
+            audioFinishedListener!!.onSetInfoTrackPlayer(trackPosition)
+        }
         audioPlayerService!!.setTrackPreviewUrl(trackList[trackPosition].previewUrl!!)
         audioPlayerService!!.noUpdateUI()
         audioPlayerService!!.onPlayAudio(0)
