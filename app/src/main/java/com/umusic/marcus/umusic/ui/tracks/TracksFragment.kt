@@ -1,5 +1,6 @@
 package com.umusic.marcus.umusic.ui.tracks
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -33,23 +34,29 @@ class TracksFragment : Fragment(), TracksPresenter.View {
         adapter.notifyDataSetChanged()
     }
 
+    @SuppressLint("CommitTransaction")
     override fun launchTrack(tracks: List<Track>, track: Track, position: Int) {
         //for(track in tracks){
         //    track.album = album
         //  }
+        val ft = fragmentManager.beginTransaction()
+        val prev = activity.supportFragmentManager.findFragmentByTag("play")
+        if (prev != null) {
+            ft.remove(prev)
+        }
         when {
             arguments.containsKey(PLAYLIST) ->
                 PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
                         .show(
                                 activity.supportFragmentManager,
 
-                                ""
+                                "play"
                         )
             else -> PlayerFragment.newInstance(album, TracksUtil.setTracks(tracks), position)
                     .show(
                             activity.supportFragmentManager,
 
-                            ""
+                            "play"
                     )
         }
     }

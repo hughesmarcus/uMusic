@@ -69,7 +69,7 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         trackList = getTrackList(arguments.getString(ArtistActivity.EXTRA_TRACKS))
         trackPosition = arguments.getInt(ArtistActivity.EXTRA_TRACK_POSITION)
         when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context))
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context, trackPosition))
         }
         audioPlayerPresenter.view = this
         when {

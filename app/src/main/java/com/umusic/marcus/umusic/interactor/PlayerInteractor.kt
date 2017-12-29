@@ -13,7 +13,7 @@ import com.umusic.marcus.umusic.ui.player.AudioFinishedListener
 import com.umusic.marcus.umusic.ui.player.AudioPlayerService
 
 
-class PlayerInteractor(private val trackList: List<Track>, private val context: Context) {
+class PlayerInteractor(private val trackList: List<Track>, private val context: Context, private var trackPosition: Int) {
 
     private var audioFinishedListener: AudioFinishedListener? = null
     private var audioPlayerService: AudioPlayerService? = null
@@ -43,7 +43,6 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
             }
         }
     }
-    private var trackPosition: Int = 0
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
             val playerBinder = iBinder as AudioPlayerService.PlayerBinder
@@ -74,21 +73,21 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
     }
 
     private fun changeTrack(trackPosition: Int) {
-        var trackNumber = trackPosition
         isPlayerPlaying = true
         isPlayerPaused = false
-        while (trackList[trackNumber].previewUrl == null && trackNumber < trackList.size) {
-            trackNumber++
+        if (trackList[trackPosition].previewUrl == null) {
+            trackCurrentPosition++
+            changeTrack(trackCurrentPosition)
         }
-        if (trackList[trackNumber].previewUrl == null) {
-            destroyAudioService()
-        }
-        if (trackList[trackNumber].album == null) {
-            audioFinishedListener!!.onSetTrackPlayer(trackNumber)
+        //   if (trackList[trackNumber].previewUrl == null) {
+        //      destroyAudioService()
+        //  }
+        if (trackList[trackPosition].album == null) {
+            audioFinishedListener!!.onSetTrackPlayer(trackPosition)
         } else {
-            audioFinishedListener!!.onSetInfoTrackPlayer(trackNumber)
+            audioFinishedListener!!.onSetInfoTrackPlayer(trackPosition)
         }
-        audioPlayerService!!.setTrackPreviewUrl(trackList[trackNumber].previewUrl!!)
+        audioPlayerService!!.setTrackPreviewUrl(trackList[trackPosition].previewUrl!!)
         audioPlayerService!!.noUpdateUI()
         audioPlayerService!!.onPlayAudio(0)
         audioFinishedListener!!.onResetTrackDuration()
