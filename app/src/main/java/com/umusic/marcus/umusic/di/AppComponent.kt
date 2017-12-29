@@ -2,6 +2,10 @@ package com.umusic.marcus.umusic.di
 
 import android.app.Application
 import com.umusic.marcus.umusic.UMusicApplication
+import com.umusic.marcus.umusic.interactor.ArtistsInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.interactor.PlaylistInteractor
+import com.umusic.marcus.umusic.interactor.TracksInteractor
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -23,6 +27,11 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
 
 
     fun inject(application: UMusicApplication)
+    fun inject(artistsInteractor: ArtistsInteractor)
+    fun inject(homeInteractor: HomeInteractor)
+    fun inject(tracksInteractor: TracksInteractor)
+    fun inject(playlistInteractor: PlaylistInteractor)
+
 
     override fun inject(instance: DaggerApplication)
 
@@ -33,6 +42,7 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
         @BindsInstance
         fun application(application: Application): AppComponent.Builder
 
+        fun spotifyServicesModule(spotifyServicesModule: SpotifyServicesModule): Builder
         fun roomModule(roomModule: RoomModule): Builder
         fun build(): AppComponent
 

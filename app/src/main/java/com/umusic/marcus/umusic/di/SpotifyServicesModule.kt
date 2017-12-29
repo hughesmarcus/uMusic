@@ -1,6 +1,7 @@
 package com.umusic.marcus.umusic.di
 
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
+import com.umusic.marcus.umusic.data.remote.client.SpotifyService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,7 +13,7 @@ class SpotifyServicesModule {
 
     @Singleton
     @Provides
-    internal fun provideSpotifyService(): SpotifyClient {
+    internal fun provideSpotifyService(): SpotifyService {
         return SpotifyClient()
     }
 

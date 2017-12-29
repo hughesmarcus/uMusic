@@ -118,7 +118,7 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId === android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
             return true
         }

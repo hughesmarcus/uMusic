@@ -18,26 +18,30 @@ import com.umusic.marcus.umusic.ui.tracks.TracksFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment(), HomePresenter.View {
 
     override fun launchAlbumDetail(album: Album) {
-        val ft = activity.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, TracksFragment.newInstance(album))
-        ft.addToBackStack(null)
-        ft.commit()
+        val tag = "album"
+        when {
+            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, TracksFragment.newInstance(album), tag)
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+        }
     }
 
     override fun launchGenreDetail(category: Category) {
-
-        val ft = activity.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, PlaylistsFragment.newInstance(category))
-        ft.addToBackStack(null)
-        ft.commit()
+        val tag = "category"
+        when {
+            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, PlaylistsFragment.newInstance(category), tag)
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+        }
 
     }
 
@@ -63,7 +67,6 @@ class HomeFragment : Fragment(), HomePresenter.View {
 
     companion object {
 
-        // TODO: Rename and change types and number of parameters
         fun newInstance(): HomeFragment {
             return HomeFragment()
         }

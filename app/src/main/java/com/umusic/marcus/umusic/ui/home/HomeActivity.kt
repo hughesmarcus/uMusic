@@ -15,10 +15,15 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         setupToolbar()
         intNav()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, HomeFragment.newInstance())
-        ft.addToBackStack("home")
-        ft.commit()
+        val tag = "home"
+        when {
+            null == supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, HomeFragment.newInstance(), tag)
+                ft.addToBackStack("home")
+                ft.commit()
+            }
+        }
     }
 
 
