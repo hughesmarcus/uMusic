@@ -20,7 +20,6 @@ class HomeActivity : BaseActivity() {
             null == supportFragmentManager.findFragmentByTag(tag) -> {
                 val ft = supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, HomeFragment.newInstance(), tag)
-                ft.addToBackStack("home")
                 ft.commit()
             }
         }

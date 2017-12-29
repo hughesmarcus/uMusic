@@ -17,10 +17,15 @@ import kotlinx.android.synthetic.main.fragment_playlists.*
 
 class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
     override fun launchPlaylistDetail(playlist: Playlist) {
-        val ft = activity.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container, TracksFragment.newInstance(playlist))
-        ft.addToBackStack(null)
-        ft.commit()
+        val tag = "tracks"
+        when {
+            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, TracksFragment.newInstance(playlist))
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+        }
     }
 
     override fun renderPlaylists(playlists: List<Playlist>) {
