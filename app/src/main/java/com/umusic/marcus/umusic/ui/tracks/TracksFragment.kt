@@ -34,6 +34,9 @@ class TracksFragment : Fragment(), TracksPresenter.View {
     }
 
     override fun launchTrack(tracks: List<Track>, track: Track, position: Int) {
+        //for(track in tracks){
+        //    track.album = album
+        //  }
         when {
             arguments.containsKey(PLAYLIST) ->
                 PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
@@ -142,6 +145,11 @@ class TracksFragment : Fragment(), TracksPresenter.View {
 
     }
 
+    override fun onDestroy() {
+        tracksPresenter.terminate()
+        super.onDestroy()
+
+    }
     companion object {
         private val PLAYLIST = "playlist"
         private val ALBUM = "album"

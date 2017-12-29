@@ -7,6 +7,10 @@ import com.umusic.marcus.umusic.ui.BasePresenter
 
 
 class PlaylistsPresenter(private val interactor: PlaylistInteractor) : BasePresenter<PlaylistsPresenter.View>() {
+    override fun terminate() {
+        super.terminate()
+        view = null
+    }
 
     fun launchPlaylistDetail(playlist: Playlist) {
         view!!.launchPlaylistDetail(playlist)

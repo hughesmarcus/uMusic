@@ -83,6 +83,10 @@ class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
         // appbar_artist!!.addOnOffsetChangedListener(this)
     }
 
+    override fun onDestroy() {
+        playlistsPresenter.terminate()
+        super.onDestroy()
+    }
     companion object {
 
         // TODO: Customize parameter argument names

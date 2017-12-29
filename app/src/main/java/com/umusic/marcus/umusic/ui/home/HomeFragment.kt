@@ -109,6 +109,11 @@ class HomeFragment : Fragment(), HomePresenter.View {
         return activity
     }
 
+    override fun onDestroy() {
+        homePresenter.terminate()
+        super.onDestroy()
+    }
+
     override fun renderNewReleases(albums: List<Album>) {
         val adapter = rv_releases.adapter as ReleasesAdapter
         adapter.setTracks(albums)
