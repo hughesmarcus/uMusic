@@ -28,7 +28,10 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
             if (trackDuration == 0) {
                 setTrackDuration()
             }
-            trackCurrentPosition = msg.data.getInt(AudioPlayerService.EXTRA_CURRENT_TRACK_POSITION)
+            if (msg.data.getInt(AudioPlayerService.EXTRA_COMPLETE) == 1) {
+                onNext()
+            } else
+                trackCurrentPosition = msg.data.getInt(AudioPlayerService.EXTRA_CURRENT_TRACK_POSITION)
             audioFinishedListener!!.onSetTimeStart(trackCurrentPosition)
 
             if (trackCurrentPosition == trackDuration && trackCurrentPosition != 0) {

@@ -71,6 +71,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
         val completionMessage = Message()
         val completionBundle = Bundle()
         completionBundle.putBoolean(EXTRA_IS_PLAYER, false)
+        completionBundle.putInt(EXTRA_COMPLETE, 1)
         completionMessage.data = completionBundle
         if (mediaPlayerHandler != null) {
             mediaPlayerHandler!!.sendMessage(completionMessage)
@@ -228,5 +229,6 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
         val EXTRA_IS_PLAYER = "is_player"
         val EXTRA_CURRENT_TRACK_POSITION = "current_track_position"
         val EXTRA_TRACK_PREVIEW_URL = "track_preview_url"
+        val EXTRA_COMPLETE = "track_complete"
     }
 }

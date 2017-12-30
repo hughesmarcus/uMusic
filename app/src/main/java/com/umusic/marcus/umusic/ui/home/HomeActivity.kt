@@ -32,7 +32,6 @@ class HomeActivity : BaseActivity() {
         when {
             actionBar != null -> {
                 actionBar.setDisplayUseLogoEnabled(false)
-                // actionBar.setDisplayHomeAsUpEnabled(true)
                 actionBar.setDisplayShowTitleEnabled(false)
             }
         }
