@@ -65,12 +65,7 @@ class HomeFragment : Fragment(), HomePresenter.View {
 
     }
 
-    companion object {
 
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
-    }
 
     private fun setupRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -129,4 +124,10 @@ class HomeFragment : Fragment(), HomePresenter.View {
         adapter.notifyDataSetChanged()
     }
 
+    companion object {
+
+        fun newInstance(): HomeFragment {
+            return HomeFragment()
+        }
+    }
 }

@@ -16,9 +16,9 @@
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.artist.ArtistActivity"
+            android:name=".ui.artist.ArtistFragment"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
@@ -55,7 +55,8 @@
             android:label="@string/title_activity_home"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppTheme.Music"></activity>
+            android:theme="@style/Theme.AppTheme.Music" />
+        <activity android:name=".ui.search.SearchActivity"></activity>
     </application>
 
 </manifest>

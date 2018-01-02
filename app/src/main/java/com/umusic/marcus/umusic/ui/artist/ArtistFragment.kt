@@ -3,14 +3,16 @@ package com.umusic.marcus.umusic.ui.artist
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
-import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Artist
 import com.umusic.marcus.umusic.data.model.Track
@@ -19,33 +21,39 @@ import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.player.PlayerFragment
 import com.umusic.marcus.umusic.ui.utils.BlurEffectUtils
 import com.umusic.marcus.umusic.ui.utils.TracksUtil
-import kotlinx.android.synthetic.main.activity_tracks.*
+import kotlinx.android.synthetic.main.fragment_artist.*
 
 
-class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffsetChangedListener {
+class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetChangedListener {
 
 
     private var artistPresenter: ArtistPresenter? = null
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val rootview = inflater!!.inflate(R.layout.fragment_artist, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tracks)
-        intNav()
-        ButterKnife.bind(this)
-        setupToolbar()
+        return rootview
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        if (view != null) {
+            ButterKnife.bind(this, view)
+        }
         setupRecyclerView()
 
         artistPresenter = ArtistPresenter(TracksInteractor(SpotifyClient()))
         artistPresenter!!.view = this
 
-        val artist = intent.getParcelableExtra<Artist>(EXTRA_REPOSITORY)
+        val artist = arguments.getParcelable<Artist>(ARTIST)
         initializeViews(artist)
 
         artistPresenter!!.onSearchTracks(artist.id!!)
+
     }
 
+
     private fun setupRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         rv_tracks!!.layoutManager = linearLayoutManager
         val adapter = ArtistAdapter()
         adapter.setItemClickListener(
@@ -105,12 +113,11 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
     }
 
     override fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
-        PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
-                .show(
-                        supportFragmentManager,
 
-                        ""
-                )
+        val ft = activity.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container_search, PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position))
+        ft.addToBackStack(null)
+        ft.commit()
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -119,7 +126,7 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            activity.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -139,34 +146,23 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
     }
 
 
-    private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        when {
-            actionBar != null -> {
-                actionBar.setDisplayUseLogoEnabled(false)
-                actionBar.setDisplayHomeAsUpEnabled(true)
-                actionBar.setDisplayShowTitleEnabled(false)
-            }
-        }
-    }
 
     private fun initializeViews(artist: Artist) {
 
         when {
             artist.images!!.size > 0 -> {
-                Picasso.with(this)
+                Picasso.with(activity)
                         .load(artist.images!![0].url)
-                        .transform(BlurEffectUtils(this, 20))
+                        .transform(BlurEffectUtils(activity, 20))
                         .into(iv_collapsing_artist)
-                Picasso.with(this).load(artist.images!![0].url).into(civ_artist)
+                Picasso.with(activity).load(artist.images!![0].url).into(civ_artist)
             }
             else -> {
                 val imageHolder = "http://d2c87l0yth4zbw-2.global.ssl.fastly.net/i/_global/open-graph-default.png"
                 civ_artist!!.visibility = View.GONE
-                Picasso.with(this)
+                Picasso.with(activity)
                         .load(imageHolder)
-                        .transform(BlurEffectUtils(this, 20))
+                        .transform(BlurEffectUtils(activity, 20))
                         .into(iv_collapsing_artist)
             }
         }
@@ -180,13 +176,22 @@ class ArtistActivity : BaseActivity(), ArtistPresenter.View, AppBarLayout.OnOffs
 
 
     override fun context(): Context {
-        return this@ArtistActivity
+        return activity
     }
-
     companion object {
 
         val EXTRA_REPOSITORY = "EXTRA_ARTIST"
         val EXTRA_TRACK_POSITION = "EXTRA_TRACK_POSITION"
         val EXTRA_TRACKS = "EXTRA_TRACKS"
+
+        private val ARTIST = "artist"
+        fun newInstance(artist: Artist): ArtistFragment {
+            val artistFragment = ArtistFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(ARTIST, artist)
+            artistFragment.arguments = bundle
+            return artistFragment
+
+        }
     }
 }

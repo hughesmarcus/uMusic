@@ -1,8 +1,8 @@
-package com.umusic.marcus.umusic.ui.artists
+package com.umusic.marcus.umusic.ui.search
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
@@ -17,15 +17,16 @@ import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Artist
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.ArtistsInteractor
-import com.umusic.marcus.umusic.ui.artist.ArtistActivity
+import com.umusic.marcus.umusic.ui.artist.ArtistFragment
+
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTextListener {
+class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextListener {
 
     lateinit var searchView: SearchView
-    lateinit var artistsPresenter: ArtistsPresenter
+    lateinit var searchPresenter: SearchPresenter
     @BindView(R.id.rv_artists)
     lateinit var rv_artist: RecyclerView
 
@@ -36,8 +37,8 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        artistsPresenter = ArtistsPresenter(ArtistsInteractor(SpotifyClient()))
-        artistsPresenter.view = this
+        searchPresenter = SearchPresenter(ArtistsInteractor(SpotifyClient()))
+        searchPresenter.view = this
     }
 
     @Nullable override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -56,7 +57,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     }
 
     override fun onDestroy() {
-        artistsPresenter.terminate()
+        searchPresenter.terminate()
         super.onDestroy()
     }
 
@@ -70,7 +71,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
-        artistsPresenter.onSearchArtist(query)
+        searchPresenter.onSearchArtist(query)
         searchView.clearFocus()
         return true
     }
@@ -117,7 +118,7 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     }
 
     override fun renderArtists(artists: List<Artist>) {
-        val adapter = rv_artist.adapter as ArtistsAdapter
+        val adapter = rv_artist.adapter as SearchAdapter
         adapter.setArtists(artists)
         adapter.notifyDataSetChanged()
     }
@@ -141,13 +142,13 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
     }
 
     private fun setupRecyclerView() {
-        val adapter = ArtistsAdapter()
+        val adapter = SearchAdapter()
         adapter.setItemClickListener(
 
-                itemClickListener = object : ArtistsAdapter.ItemClickListener {
+                itemClickListener = object : SearchAdapter.ItemClickListener {
 
                     override fun onItemClick(artist: Artist, position: Int) {
-                        artistsPresenter.launchArtistDetail(artist)
+                        searchPresenter.launchArtistDetail(artist)
                     }
 
                 }
@@ -155,14 +156,23 @@ class ArtistsFragment : Fragment(), ArtistsPresenter.View, SearchView.OnQueryTex
         rv_artist.adapter = adapter
     }
 
+    @SuppressLint("CommitTransaction")
     override fun launchArtistDetail(artist: Artist) {
-        val intent = Intent(context, ArtistActivity::class.java)
-        intent.putExtra(ArtistActivity.EXTRA_REPOSITORY, artist)
-        startActivity(intent)
+        val ft = activity.supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container_search, ArtistFragment.newInstance(artist))
+        ft.addToBackStack(null)
+        ft.commit()
     }
 
 
     override fun context(): Context? {
         return null
+    }
+
+    companion object {
+
+        fun newInstance(): SearchFragment {
+            return SearchFragment()
+        }
     }
 }

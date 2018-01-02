@@ -1,19 +1,16 @@
 package com.umusic.marcus.umusic.ui.player
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.support.annotation.Nullable
-import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
@@ -27,15 +24,14 @@ import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
-import com.umusic.marcus.umusic.ui.artist.ArtistActivity
+import com.umusic.marcus.umusic.ui.artist.ArtistFragment
 import com.umusic.marcus.umusic.ui.utils.ServiceUtils
+import kotlinx.android.synthetic.main.activity_home.player_control
 import kotlinx.android.synthetic.main.fragment_audio_player.*
 import java.util.*
 
 
-
-
-class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarChangeListener {
+class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarChangeListener {
 
 
     @BindView(R.id.iv_album_player)
@@ -53,21 +49,16 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
     private var trackPosition: Int = 0
     private lateinit var audioPlayerPresenter: AudioPlayerPresenter
 
-    @NonNull
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return dialog
-    }
 
     @Nullable
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val rootView = inflater!!.inflate(R.layout.fragment_audio_player, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_audio_player2, container, false)
         ButterKnife.bind(this, rootView)
 
-        trackList = getTrackList(arguments.getString(ArtistActivity.EXTRA_TRACKS))
-        trackPosition = arguments.getInt(ArtistActivity.EXTRA_TRACK_POSITION)
+
+        trackList = getTrackList(arguments.getString(ArtistFragment.EXTRA_TRACKS))
+        trackPosition = arguments.getInt(ArtistFragment.EXTRA_TRACK_POSITION)
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context, trackPosition))
         }
@@ -80,14 +71,15 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
             else -> audioPlayerPresenter.setInfoMediaPlayer(trackPosition)
         }
         audioPlayerPresenter.onStartAudioService(trackList!![trackPosition].previewUrl!!)
-
         return rootView
     }
 
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        activity.player_control.visibility = View.GONE
+    }
     override fun onDestroyView() {
-        when {
-            dialog != null && retainInstance -> dialog.setDismissMessage(null)
-        }
+        activity.player_control.visibility = View.VISIBLE
         audioPlayerPresenter.terminate()
         super.onDestroyView()
     }
@@ -233,8 +225,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
             val ALBUM = "album"
             val playerFragment = PlayerFragment()
             val bundle = Bundle()
-            bundle.putString(ArtistActivity.EXTRA_TRACKS, tracks)
-            bundle.putInt(ArtistActivity.EXTRA_TRACK_POSITION, position)
+            bundle.putString(ArtistFragment.EXTRA_TRACKS, tracks)
+            bundle.putInt(ArtistFragment.EXTRA_TRACK_POSITION, position)
             bundle.putParcelable(ALBUM, album)
             playerFragment.arguments = bundle
             return playerFragment
@@ -243,8 +235,8 @@ class PlayerFragment : DialogFragment(), AudioPlayerPresenter.View, SeekBar.OnSe
         fun newInstance(tracks: String, position: Int): PlayerFragment {
             val playerFragment = PlayerFragment()
             val bundle = Bundle()
-            bundle.putString(ArtistActivity.EXTRA_TRACKS, tracks)
-            bundle.putInt(ArtistActivity.EXTRA_TRACK_POSITION, position)
+            bundle.putString(ArtistFragment.EXTRA_TRACKS, tracks)
+            bundle.putInt(ArtistFragment.EXTRA_TRACK_POSITION, position)
             playerFragment.arguments = bundle
             return playerFragment
         }

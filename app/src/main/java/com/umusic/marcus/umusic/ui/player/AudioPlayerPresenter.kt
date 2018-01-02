@@ -27,15 +27,18 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
     }
 
     fun onStartAudioService(trackUrl: String) {
-        view!!.onStartAudioService(trackUrl, serviceConnection!!)
+        if (view != null)
+            view!!.onStartAudioService(trackUrl, serviceConnection!!)
     }
 
     fun setInfoMediaPlayer(trackPosition: Int) {
-        view!!.setInfoTrackPlayer(trackPosition)
+        if (view != null)
+            view!!.setInfoTrackPlayer(trackPosition)
     }
 
     fun setInfoMediaPlayer(trackPosition: Int, album: Album) {
-        view!!.setInfoTrackPlayer(trackPosition, album)
+        if (view != null)
+            view!!.setInfoTrackPlayer(trackPosition, album)
     }
 
     override fun terminate() {
@@ -45,31 +48,39 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
     }
 
     override fun onPlay() {
-        view!!.isPlay()
+        if (view != null)
+            view!!.isPlay()
     }
 
     override fun onPause() {
-        view!!.isPause()
+        if (view != null)
+            view!!.isPause()
     }
 
     override fun onSetTimeStart(trackCurrentPosition: Int) {
-        view!!.setTimeStart(trackCurrentPosition)
+        if (view != null)
+            view!!.setTimeStart(trackCurrentPosition)
     }
 
      override fun onSetTimeFinished(audioPlayerService: AudioPlayerService) {
-        view!!.setTimeFinished(audioPlayerService)
+         if (view != null)
+             view!!.setTimeFinished(audioPlayerService)
     }
 
     override fun onResetTrackDuration() {
-       view!!.onResetTrackDuration()
+        if (view != null)
+            view!!.onResetTrackDuration()
     }
 
     override fun onSetTrackPlayer(trackPosition: Int) {
-        view!!.setTrackPlayer(trackPosition)
+        if (view != null)
+            view!!.setTrackPlayer(trackPosition)
     }
 
     override fun onSetInfoTrackPlayer(trackPosition: Int) {
-        view!!.setInfoTrackPlayer(trackPosition)
+        if (view != null) {
+            view!!.setInfoTrackPlayer(trackPosition)
+        }
     }
 
     override fun onServiceConnection(serviceConnection: ServiceConnection) {

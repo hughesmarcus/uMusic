@@ -56,7 +56,7 @@
     </style>
 
 
-    <!-- activity_tracks.xml -->
+    <!--fragment_artist.xml -->
 
     <style name="Theme.AppTheme.Music.CircularImageView">
         <item name="android:layout_width">@dimen/image_width</item>

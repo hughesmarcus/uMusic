@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.artists
+package com.umusic.marcus.umusic.ui.search
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_artist.view.*
 import java.util.*
 
 
-class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsViewHolder>() {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ArtistsViewHolder>() {
 
     private var artists: List<Artist>? = null
     private var itemClickListener: ItemClickListener? = null

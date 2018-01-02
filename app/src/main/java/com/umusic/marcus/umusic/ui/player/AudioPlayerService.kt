@@ -4,15 +4,19 @@ import android.app.Service
 import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.session.MediaSession
 import android.os.*
 import android.support.annotation.Nullable
+import android.support.v4.content.LocalBroadcastManager
 import java.io.IOException
 import java.util.*
+
 
 @Suppress("DEPRECATION")
 class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
     private var mediaPlayerBinder: PlayerBinder? = null
+    private var mediaSession: MediaSession? = null
     private var mediaPlayerHandler: Handler? = null
     private var timer: Timer? = null
     private var currentTrackPosition: Int = 0
@@ -33,9 +37,22 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
 
     override fun onCreate() {
         super.onCreate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //   mediaSession = MediaSession(this, "MusicService")
+            sendMessage("started")
+            // mediaSession!!.setCallback(MediaSessionCallback())
+            // mediaSession!!.setFlags(MediaSession.FLAG_HANDLES_MEDIA_BUTTONS or MediaSession.FLAG_HANDLES_TRANSPORT_CONTROLS)
+        }
+
         mediaPlayerBinder = PlayerBinder()
     }
 
+    private fun sendMessage(message: String) {
+        val intent = Intent("send")
+        // You can also include some extra data.
+        intent.putExtra("message", message)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -140,6 +157,7 @@ class AudioPlayerService : Service(), MediaPlayer.OnPreparedListener, MediaPlaye
 
     override fun onDestroy() {
         super.onDestroy()
+        sendMessage("stopped")
         when {
             timer != null -> noUpdateUI()
         }

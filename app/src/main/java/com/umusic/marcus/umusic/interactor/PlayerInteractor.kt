@@ -29,20 +29,22 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
                 setTrackDuration()
             }
             if (msg.data.getInt(AudioPlayerService.EXTRA_COMPLETE) == 1) {
-                onNext()
-            } else
-                trackCurrentPosition = msg.data.getInt(AudioPlayerService.EXTRA_CURRENT_TRACK_POSITION)
-            audioFinishedListener!!.onSetTimeStart(trackCurrentPosition)
 
-            if (trackCurrentPosition == trackDuration && trackCurrentPosition != 0) {
-                isPlayerPlaying = false
-                isPlayerPaused = false
-                trackCurrentPosition = 0
-            }
-            if (isPlayerPlaying) {
-                audioFinishedListener!!.onPause()
+                onNext()
             } else {
-                audioFinishedListener!!.onPlay()
+                trackCurrentPosition = msg.data.getInt(AudioPlayerService.EXTRA_CURRENT_TRACK_POSITION)
+                audioFinishedListener!!.onSetTimeStart(trackCurrentPosition)
+
+                if (trackCurrentPosition == trackDuration && trackCurrentPosition != 0) {
+                    isPlayerPlaying = false
+                    isPlayerPaused = false
+                    trackCurrentPosition = 0
+                }
+                if (isPlayerPlaying) {
+                    audioFinishedListener!!.onPause()
+                } else {
+                    audioFinishedListener!!.onPlay()
+                }
             }
         }
     }

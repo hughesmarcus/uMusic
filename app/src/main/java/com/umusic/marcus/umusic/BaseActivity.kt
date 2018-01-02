@@ -3,8 +3,8 @@ package com.umusic.marcus.umusic
 import android.content.Intent
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import com.umusic.marcus.umusic.ui.artists.ArtistsActivity
 import com.umusic.marcus.umusic.ui.home.HomeActivity
+import com.umusic.marcus.umusic.ui.search.SearchActivity
 
 /**
  * Created by Marcus on 12/4/2017.
@@ -25,7 +25,7 @@ open class BaseActivity : AppCompatActivity() {
             R.id.action_library -> {
             }
             R.id.action_search -> {
-                val intent = Intent(this, ArtistsActivity::class.java)
+                val intent = Intent(this, SearchActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)

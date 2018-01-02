@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.ui.artists
+package com.umusic.marcus.umusic.ui.search
 
 import android.util.Log
 import com.umusic.marcus.umusic.data.model.Artist
@@ -6,7 +6,7 @@ import com.umusic.marcus.umusic.interactor.ArtistsInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
 
 
-class ArtistsPresenter(private val interactor: ArtistsInteractor) : BasePresenter<ArtistsPresenter.View>() {
+class SearchPresenter(private val interactor: ArtistsInteractor) : BasePresenter<SearchPresenter.View>() {
 
     fun onSearchArtist(name: String) {
         view!!.showLoading()

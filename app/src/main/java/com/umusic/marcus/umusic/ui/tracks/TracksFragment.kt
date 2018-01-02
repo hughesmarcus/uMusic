@@ -39,25 +39,24 @@ class TracksFragment : Fragment(), TracksPresenter.View {
         //for(track in tracks){
         //    track.album = album
         //  }
-        val ft = fragmentManager.beginTransaction()
-        val prev = activity.supportFragmentManager.findFragmentByTag("play")
-        if (prev != null) {
-            ft.remove(prev)
-        }
+        //  val ft = fragmentManager.beginTransaction()
+        // val prev = activity.supportFragmentManager.findFragmentByTag("play")
+        // if (prev != null) {
+        //      ft.remove(prev)
+        //  }
         when {
-            arguments.containsKey(PLAYLIST) ->
-                PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position)
-                        .show(
-                                activity.supportFragmentManager,
-
-                                "play"
-                        )
-            else -> PlayerFragment.newInstance(album, TracksUtil.setTracks(tracks), position)
-                    .show(
-                            activity.supportFragmentManager,
-
-                            "play"
-                    )
+            arguments.containsKey(PLAYLIST) -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position))
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+            else -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_container, PlayerFragment.newInstance(album, TracksUtil.setTracks(tracks), position))
+                ft.addToBackStack(null)
+                ft.commit()
+            }
         }
     }
 

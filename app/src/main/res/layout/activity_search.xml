@@ -5,28 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.umusic.marcus.umusic.ui.home.HomeActivity">
+    tools:context="com.umusic.marcus.umusic.ui.search.SearchActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.AppTheme.Music.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/Theme.AppTheme.Music.PopupOverlay" />
-    </android.support.design.widget.AppBarLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_gravity="top"
+        android:layout_marginBottom="?attr/actionBarSize">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/player_control"
@@ -62,7 +48,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <FrameLayout
-            android:id="@+id/fragment_container"
+            android:id="@+id/fragment_container_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/player_control"
