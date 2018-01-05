@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.di
+package com.umusic.marcus.umusic.di.module
 
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.data.remote.client.SpotifyService

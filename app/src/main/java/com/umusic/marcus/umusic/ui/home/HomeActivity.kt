@@ -9,7 +9,6 @@ import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.View
 import butterknife.ButterKnife
-import butterknife.OnClick
 import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
 import kotlinx.android.synthetic.main.activity_home.*
@@ -24,7 +23,7 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, IntentFilter("send"))
-        setupToolbar()
+        //  setupToolbar()
         intNav()
         val tag = "home"
         when {
@@ -41,17 +40,19 @@ class HomeActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        when {
-            actionBar != null -> {
-                actionBar.setDisplayUseLogoEnabled(false)
-                actionBar.setDisplayShowTitleEnabled(false)
-            }
-        }
-    }
-
+    //  private fun setupToolbar() {
+    //     setSupportActionBar(toolbar)
+    //     val actionBar = supportActionBar
+    //     when {
+    // //       actionBar != null -> {
+    //           actionBar.setDisplayUseLogoEnabled(false)
+    //         actionBar.setDisplayShowTitleEnabled(false)
+    //     }
+    //  }
+    // }
+    /**
+     * show or not show player depending on Service
+     */
     private val messageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             // Get extra data included in the Intent
@@ -59,25 +60,18 @@ class HomeActivity : BaseActivity() {
 
             if (message == "started") {
                 Log.d("HOMEAct", message)
-                //   player_control.visibility = View.VISIBLE
+
+                //  fragment_mini_player_container.visibility = View.VISIBLE
             }
             if (message == "stopped") {
                 Log.d("HOME", message)
-                player_control.visibility = View.GONE
+                fragment_mini_player_container.visibility = View.GONE
             }
 
 
         }
     }
 
-    @OnClick(R.id.ib_play_player)
-    fun previewTrack() {
-        Log.d("HOMEAct", "play/stop")
-    }
 
-    @OnClick(R.id.ib_next_player)
-    fun nextTrack() {
-        Log.d("HOMEAct", "next")
-    }
 
 }

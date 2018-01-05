@@ -120,6 +120,9 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
         ft.commit()
     }
 
+    /**
+     * Collapsing toolbar
+     */
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         onOffsetChangedState(appBarLayout, verticalOffset)
     }

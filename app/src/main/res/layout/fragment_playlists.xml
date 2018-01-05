@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.umusic.marcus.umusic.ui.home.PlaylistsFragment">
 
+
+    <include layout="@layout/toolbar" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_playlists"
         android:layout_width="match_parent"

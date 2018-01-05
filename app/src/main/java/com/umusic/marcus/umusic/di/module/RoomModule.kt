@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.di
+package com.umusic.marcus.umusic.di.module
 
 import android.arch.persistence.room.Room
 import android.content.Context

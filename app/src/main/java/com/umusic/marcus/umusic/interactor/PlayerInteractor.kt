@@ -13,7 +13,7 @@ import com.umusic.marcus.umusic.ui.player.AudioFinishedListener
 import com.umusic.marcus.umusic.ui.player.AudioPlayerService
 
 
-class PlayerInteractor(private val trackList: List<Track>, private val context: Context, private var trackPosition: Int) {
+class PlayerInteractor {
 
     private var audioFinishedListener: AudioFinishedListener? = null
     private var audioPlayerService: AudioPlayerService? = null
@@ -22,6 +22,17 @@ class PlayerInteractor(private val trackList: List<Track>, private val context: 
     private var isPlayerPaused = false
     private var trackDuration = 0
     private var trackCurrentPosition: Int = 0
+    private lateinit var trackList: List<Track>
+    private lateinit var context: Context
+    private var trackPosition = 0
+
+    fun providestracks(trackPosition: Int, context: Context, trackList: List<Track>) {
+        this.trackPosition = trackPosition
+        this.context = context
+        this.trackList = trackList
+
+    }
+
     @SuppressLint("HandlerLeak") private val playerHandler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)

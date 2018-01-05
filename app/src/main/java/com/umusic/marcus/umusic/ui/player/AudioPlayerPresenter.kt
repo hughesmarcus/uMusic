@@ -1,12 +1,15 @@
 package com.umusic.marcus.umusic.ui.player
 
+import android.content.Context
 import android.content.ServiceConnection
 import com.umusic.marcus.umusic.data.model.Album
+import com.umusic.marcus.umusic.data.model.Track
 import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.BasePresenter
+import javax.inject.Inject
 
 
-class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : BasePresenter<AudioPlayerPresenter.View>(), AudioFinishedListener {
+class AudioPlayerPresenter @Inject constructor(private val playerInteractor: PlayerInteractor) : BasePresenter<AudioPlayerPresenter.View>(), AudioFinishedListener {
 
     private var serviceConnection: ServiceConnection? = null
 
@@ -14,6 +17,10 @@ class AudioPlayerPresenter(private val playerInteractor: PlayerInteractor) : Bas
         this.playerInteractor.setAudioFinishedListener(this)
     }
 
+    fun providestracks(trackPosition: Int, context: Context, trackList: List<Track>) {
+        playerInteractor.providestracks(trackPosition, context, trackList)
+
+    }
     fun onPreviewTrack() {
         playerInteractor.onPreview()
     }

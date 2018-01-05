@@ -17,4 +17,5 @@ class HomeActivityModule {
     internal fun providesHomePresenter(interactor: HomeInteractor): HomePresenter {
         return HomePresenter(interactor)
     }
+
 }

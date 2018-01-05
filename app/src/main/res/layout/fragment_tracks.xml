@@ -1,9 +1,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.umusic.marcus.umusic.ui.tracks.TracksFragment">
 
+    <LinearLayout
+        android:id="@+id/headerbar_artists"
+        style="@style/Theme.AppTheme.Music.HeaderBar"
+        app:layout_constraintBottom_toTopOf="@+id/rv_tracks">
+
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tracks"
         android:layout_width="match_parent"

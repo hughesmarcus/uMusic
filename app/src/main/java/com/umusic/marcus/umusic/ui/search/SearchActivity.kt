@@ -7,13 +7,11 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
-import android.view.View
-import butterknife.OnClick
 import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
-import kotlinx.android.synthetic.main.activity_home.*
 
 class SearchActivity : BaseActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +28,9 @@ class SearchActivity : BaseActivity() {
         }
     }
 
+    /**
+     * show or not show player depending on Service
+     */
     private val messageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             // Get extra data included in the Intent
@@ -41,7 +42,7 @@ class SearchActivity : BaseActivity() {
             }
             if (message == "stopped") {
                 Log.d("HOME", message)
-                player_control.visibility = View.GONE
+                //player_control.visibility = View.GONE
             }
 
 
@@ -51,16 +52,6 @@ class SearchActivity : BaseActivity() {
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver)
         super.onDestroy()
-    }
-
-    @OnClick(R.id.ib_play_player)
-    fun previewTrack() {
-        Log.d("HOMEAct", "play/stop")
-    }
-
-    @OnClick(R.id.ib_next_player)
-    fun nextTrack() {
-        Log.d("HOMEAct", "next")
     }
 
 }

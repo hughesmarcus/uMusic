@@ -1,18 +1,30 @@
 package com.umusic.marcus.umusic
 
+import android.app.Application
+import android.support.annotation.VisibleForTesting
+import com.umusic.marcus.umusic.di.AppComponent
 import com.umusic.marcus.umusic.di.DaggerAppComponent
-import com.umusic.marcus.umusic.di.RoomModule
-import com.umusic.marcus.umusic.di.SpotifyServicesModule
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import com.umusic.marcus.umusic.di.module.SpotifyServicesModule
 
 
-class UMusicApplication : DaggerApplication() {
+class UMusicApplication : Application() {
+
+    var appComponent: AppComponent? = null
+
+    override fun onCreate() {
+        createComponent()
+        super.onCreate()
 
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        val appComponent = DaggerAppComponent.builder().roomModule(RoomModule(applicationContext)).spotifyServicesModule(SpotifyServicesModule()).application(this).build()
-        appComponent.inject(this)
-        return appComponent
     }
+
+    @VisibleForTesting
+    fun createComponent() {
+        appComponent =
+                DaggerAppComponent.builder()
+                        .spotifyServicesModule(SpotifyServicesModule())
+                        .application(this)
+                        .build()
+    }
+
 }

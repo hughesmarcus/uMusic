@@ -21,14 +21,15 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.UMusicApplication
 import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Track
-import com.umusic.marcus.umusic.interactor.PlayerInteractor
 import com.umusic.marcus.umusic.ui.artist.ArtistFragment
 import com.umusic.marcus.umusic.ui.utils.ServiceUtils
-import kotlinx.android.synthetic.main.activity_home.player_control
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_audio_player.*
 import java.util.*
+import javax.inject.Inject
 
 
 class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarChangeListener {
@@ -47,9 +48,15 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
 
     private var trackList: List<Track>? = ArrayList()
     private var trackPosition: Int = 0
-    private lateinit var audioPlayerPresenter: AudioPlayerPresenter
+    @Inject
+    lateinit var audioPlayerPresenter: AudioPlayerPresenter
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        ((activity.application as UMusicApplication).appComponent)!!.inject(this)
+        super.onCreate(savedInstanceState)
+    }
     @Nullable
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -60,8 +67,9 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
         trackList = getTrackList(arguments.getString(ArtistFragment.EXTRA_TRACKS))
         trackPosition = arguments.getInt(ArtistFragment.EXTRA_TRACK_POSITION)
         when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter = AudioPlayerPresenter(PlayerInteractor(trackList!!, context, trackPosition))
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter.providestracks(trackPosition, context, trackList!!)
         }
+
         audioPlayerPresenter.view = this
         when {
             arguments.containsKey("album") -> {
@@ -76,10 +84,19 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
 
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        activity.player_control.visibility = View.GONE
+
+        activity.fragment_mini_player_container.visibility = View.GONE
     }
     override fun onDestroyView() {
-        activity.player_control.visibility = View.VISIBLE
+        val tag1 = "mini"
+        when {
+            null == activity.supportFragmentManager.findFragmentByTag(tag1) -> {
+                val ft = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragment_mini_player_container, MiniPlayerFragment.newInstance(), tag1)
+                ft.commit()
+            }
+        }
+        activity.fragment_mini_player_container.visibility = View.VISIBLE
         audioPlayerPresenter.terminate()
         super.onDestroyView()
     }
@@ -121,6 +138,9 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
         }
     }
 
+    /**
+     * To use if using album for list due to album image being in the album and not track object
+     */
     override fun setInfoTrackPlayer(trackPosition: Int, album: Album) {
         txt_track_title_player.text = trackList!![trackPosition].name
         txt_album_title_player.text = album.name
@@ -170,6 +190,9 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
         }
     }
 
+    /**
+     * Start AudioPlayerService
+     */
     override fun onStartAudioService(trackUrl: String, serviceConnection: ServiceConnection) {
 
         val serviceIntent = Intent(activity, AudioPlayerService::class.java)
@@ -221,6 +244,9 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
     }
 
     companion object {
+        /**
+         * To use if using album for list due to album image being in the album and not track object
+         */
         fun newInstance(album: Album, tracks: String, position: Int): PlayerFragment {
             val ALBUM = "album"
             val playerFragment = PlayerFragment()

@@ -1,4 +1,4 @@
-package com.umusic.marcus.umusic.di
+package com.umusic.marcus.umusic.di.module
 
 import android.app.Application
 import android.content.Context
