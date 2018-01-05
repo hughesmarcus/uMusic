@@ -1,13 +1,60 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.umusic.marcus.umusic.ui.artist.TrackOptionsFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.umusic.marcus.umusic.ui.tracks.TrackOptionsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/track_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="8dp"
+        android:text="Hello"
+        android:textSize="25sp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/play_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:text="@string/play_next"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:text="@string/save"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/add_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:text="@string/add_to_playlist"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/view_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:text="@string/view_album"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="108dp" />
+
+    <TextView
+        android:id="@+id/view_artist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:text="@string/view_artist"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="85dp" />
+
+</LinearLayout>

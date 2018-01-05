@@ -15,24 +15,28 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
     }
 
     fun getTracks(owner: String, playlist: String) {
+        view!!.showLoading()
         interactor.loadPlaylistTracks(owner, playlist).subscribe({ tracksList ->
             val tracks: List<Item>? = tracksList.items
             if (!tracks!!.isEmpty()) {
+                view!!.hideLoading()
                 view!!.renderTracks(tracks)
             } else {
-
+                view!!.showTracksNotFoundMessage()
             }
 
         }, Throwable::printStackTrace)
     }
 
     fun getAlbumTracks(album: String) {
+        view!!.showLoading()
         interactor.loadAlbumTracks(album).subscribe({ tracksList ->
             val tracks: List<Track>? = tracksList.albumTracks
             if (!tracks!!.isEmpty()) {
+                view!!.hideLoading()
                 view!!.renderAlbumTracks(tracks)
             } else {
-
+                view!!.showTracksNotFoundMessage()
             }
 
         }, Throwable::printStackTrace)
@@ -41,6 +45,14 @@ class TracksPresenter(private val interactor: TracksInteractor) : BasePresenter<
         view!!.launchTrack(tracks, track, position)
     }
     interface View : BasePresenter.View {
+        fun showLoading()
+
+        fun hideLoading()
+
+        fun showTracksNotFoundMessage()
+
+        fun showConnectionErrorMessage()
+
         fun renderTracks(tracks: List<Item>)
         fun launchTrack(tracks: List<Track>, track: Track, position: Int)
         fun launchTrackOptions()

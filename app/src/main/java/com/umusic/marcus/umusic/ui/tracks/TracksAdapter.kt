@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -18,6 +19,7 @@ import java.util.*
 class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
     private var tracks: List<Item>? = null
     private var itemClickListener: ItemClickListener? = null
+    private var imageClickListener: ImageClickListener? = null
 
     init {
         tracks = Collections.emptyList()
@@ -36,6 +38,11 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
         holder.txt_track_name!!.text = track.track!!.name
         holder.txt_number!!.text = position.toString()
         holder.txt_artist_name!!.text = track.track!!.artists!![0].name
+        holder.track_options!!.setOnClickListener({
+            if (imageClickListener != null) {
+                imageClickListener!!.onImageClick(tracks!!, track, position)
+            }
+        })
 
         holder.itemView.setOnClickListener({
             if (itemClickListener != null) {
@@ -60,6 +67,14 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
         fun onItemClick(tracks: List<Item>, track: Item, position: Int)
     }
 
+    fun setImageClickListener(imageClickListener: ImageClickListener) {
+        this.imageClickListener = imageClickListener
+    }
+
+    interface ImageClickListener {
+        fun onImageClick(tracks: List<Item>, track: Item, position: Int)
+    }
+
     class TracksViewHolder(internal var itemView1: View) : RecyclerView.ViewHolder(itemView1) {
         @JvmField
         @BindView(R.id.track_title)
@@ -70,6 +85,9 @@ class TracksAdapter : RecyclerView.Adapter<TracksAdapter.TracksViewHolder>() {
         @JvmField
         @BindView(R.id.authur_name)
         var txt_artist_name: TextView? = null
+        @JvmField
+        @BindView(R.id.track_options)
+        var track_options: ImageView? = null
 
         init {
             ButterKnife.bind(this, itemView1)

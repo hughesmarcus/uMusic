@@ -89,13 +89,10 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
     }
     override fun onDestroyView() {
         val tag1 = "mini"
-        when {
-            null == activity.supportFragmentManager.findFragmentByTag(tag1) -> {
                 val ft = activity.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_mini_player_container, MiniPlayerFragment.newInstance(), tag1)
                 ft.commit()
-            }
-        }
+
         activity.fragment_mini_player_container.visibility = View.VISIBLE
         audioPlayerPresenter.terminate()
         super.onDestroyView()

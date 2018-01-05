@@ -77,5 +77,10 @@
 
     <style name="Theme.AppTheme.Music.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme.AppTheme.Music.ImageView.Collapsing_Playlist">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">175dp</item>
+        <item name="android:src">@mipmap/ic_launcher</item>
+    </style>
 
 </resources>
