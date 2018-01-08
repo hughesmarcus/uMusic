@@ -1,7 +1,7 @@
 package com.umusic.marcus.umusic.ui.home.di
 
 import com.umusic.marcus.umusic.di.ActivityScope
-import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractorImpl
 import com.umusic.marcus.umusic.ui.home.HomePresenter
 import dagger.Module
 import dagger.Provides
@@ -14,8 +14,8 @@ class HomeActivityModule {
 
     @Provides
     @ActivityScope
-    internal fun providesHomePresenter(interactor: HomeInteractor): HomePresenter {
-        return HomePresenter(interactor)
+    internal fun providesHomePresenter(interactorImpl: HomeInteractorImpl): HomePresenter {
+        return HomePresenter(interactorImpl)
     }
 
 }

@@ -19,7 +19,7 @@ import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
 import com.umusic.marcus.umusic.interactor.ArtistsInteractor
 import com.umusic.marcus.umusic.ui.artist.ArtistFragment
 
-import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -43,7 +43,7 @@ class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextL
 
     @Nullable override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                                         savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_artists, container, false)
+        return inflater!!.inflate(R.layout.fragment_search, container, false)
 
     }
 

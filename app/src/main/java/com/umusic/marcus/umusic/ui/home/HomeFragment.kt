@@ -13,7 +13,7 @@ import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Category
 import com.umusic.marcus.umusic.data.remote.client.SpotifyClient
-import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractorImpl
 import com.umusic.marcus.umusic.ui.tracks.TracksFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -57,7 +57,7 @@ class HomeFragment : Fragment(), HomePresenter.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        homePresenter = HomePresenter(HomeInteractor(SpotifyClient()))
+        homePresenter = HomePresenter(HomeInteractorImpl(SpotifyClient()))
         homePresenter.view = this
 
         homePresenter.getNewReleases()

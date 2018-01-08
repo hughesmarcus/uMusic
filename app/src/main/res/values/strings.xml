@@ -7,7 +7,7 @@
     <string name="text_search">Search</string>
     <string name="text_library">Library</string>
 
-    <!-- fragment_artists.xml -->
+    <!--fragment_search.xml -->
     <string name="search_hint">Search Artist</string>
     <string name="search_music_hint">Find your favorite music</string>
     <string name="search_artist_hint">Search artists.</string>

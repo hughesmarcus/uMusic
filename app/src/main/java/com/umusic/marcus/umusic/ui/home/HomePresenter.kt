@@ -2,17 +2,17 @@ package com.umusic.marcus.umusic.ui.home
 
 import com.umusic.marcus.umusic.data.model.Album
 import com.umusic.marcus.umusic.data.model.Category
-import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractorImpl
 import com.umusic.marcus.umusic.ui.BasePresenter
 
-class HomePresenter(private val interactor: HomeInteractor) : BasePresenter<HomePresenter.View>() {
+class HomePresenter(private val interactorImpl: HomeInteractorImpl) : BasePresenter<HomePresenter.View>() {
     override fun terminate() {
         super.terminate()
         view = null
     }
 
     fun getNewReleases() {
-        interactor.loadNewReleases().subscribe({ albumsList ->
+        interactorImpl.loadNewReleases().subscribe({ albumsList ->
             val albums: List<Album>? = albumsList.albums!!.items
             if (!albums!!.isEmpty()) {
                 // view!!.hideLoading()
@@ -24,7 +24,7 @@ class HomePresenter(private val interactor: HomeInteractor) : BasePresenter<Home
     }
 
     fun getGenres() {
-        interactor.loadCategories().subscribe({ genreList ->
+        interactorImpl.loadCategories().subscribe({ genreList ->
             val genres: List<Category>? = genreList.categories!!.categories
             if (!genres!!.isEmpty()) {
                 view!!.renderGenres(genres)

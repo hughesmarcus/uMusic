@@ -1,18 +1,20 @@
-package com.umusic.marcus.umusic
+package com.umusic.marcus.umusic.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.umusic.marcus.umusic.R
 import com.umusic.marcus.umusic.ui.home.HomeActivity
+import com.umusic.marcus.umusic.ui.library.LibraryActivity
 import com.umusic.marcus.umusic.ui.search.SearchActivity
 
-/**
- * Created by Marcus on 12/4/2017.
- */
+
+@SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
 
-    internal val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.action_home -> {
 
@@ -23,6 +25,11 @@ open class BaseActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_library -> {
+                val intent = Intent(this, LibraryActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                return@OnNavigationItemSelectedListener true
             }
             R.id.action_search -> {
                 val intent = Intent(this, SearchActivity::class.java)

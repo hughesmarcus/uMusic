@@ -7,7 +7,7 @@ import com.umusic.marcus.umusic.di.module.InteractorModule
 import com.umusic.marcus.umusic.di.module.PresenterModule
 import com.umusic.marcus.umusic.di.module.SpotifyServicesModule
 import com.umusic.marcus.umusic.interactor.ArtistsInteractor
-import com.umusic.marcus.umusic.interactor.HomeInteractor
+import com.umusic.marcus.umusic.interactor.HomeInteractorImpl
 import com.umusic.marcus.umusic.interactor.PlaylistInteractor
 import com.umusic.marcus.umusic.interactor.TracksInteractor
 import com.umusic.marcus.umusic.ui.player.MiniPlayerFragment
@@ -36,7 +36,7 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
     //operator fun plus(module: FragmentModule): FragmentComponent
     fun inject(application: UMusicApplication)
     fun inject(artistsInteractor: ArtistsInteractor)
-    fun inject(homeInteractor: HomeInteractor)
+    fun inject(homeInteractorImpl: HomeInteractorImpl)
     fun inject(tracksInteractor: TracksInteractor)
     fun inject(playlistInteractor: PlaylistInteractor)
     fun inject(playerFragment: PlayerFragment)

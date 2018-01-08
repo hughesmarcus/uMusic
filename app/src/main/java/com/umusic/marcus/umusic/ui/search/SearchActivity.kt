@@ -7,8 +7,8 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
-import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.ui.BaseActivity
 
 class SearchActivity : BaseActivity() {
 

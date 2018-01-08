@@ -10,14 +10,7 @@ import android.view.ViewGroup
 
 import com.umusic.marcus.umusic.R
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ArtistOptionsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ArtistOptionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ArtistOptionsFragment : Fragment() {
 
     // TODO: Rename and change types of parameters

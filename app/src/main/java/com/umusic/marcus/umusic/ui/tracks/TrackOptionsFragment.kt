@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,6 @@ import android.view.Window
 import com.umusic.marcus.umusic.R
 
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TrackOptionsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TrackOptionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TrackOptionsFragment : DialogFragment() {
 
 
@@ -49,15 +40,7 @@ class TrackOptionsFragment : DialogFragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)

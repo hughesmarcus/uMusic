@@ -9,8 +9,8 @@ import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.View
 import butterknife.ButterKnife
-import com.umusic.marcus.umusic.BaseActivity
 import com.umusic.marcus.umusic.R
+import com.umusic.marcus.umusic.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 

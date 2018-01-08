@@ -12,7 +12,8 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.Mockito.verify
+import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 
 /**
@@ -20,6 +21,13 @@ import java.util.*
  */
 @RunWith(MockitoJUnitRunner::class)
 class ArtistPresenterTest {
+
+    private fun <T> any(): T {
+        Mockito.any<T>()
+        return uninitialized()
+    }
+
+    private fun <T> uninitialized(): T = null as T
     var track: TracksContainer = TracksContainer()
     @Mock
     internal lateinit var view: ArtistPresenter.View
@@ -40,16 +48,28 @@ class ArtistPresenterTest {
         presenter = ArtistPresenter(interactor)
 
         presenter.view = view
-
+        track.tracks = Arrays.asList(Mockito.mock(Track::class.java), Mockito.mock(Track::class.java), Mockito.mock(Track::class.java))
     }
 
     @Test
     fun shouldLoadReleases() {
 
-        track.tracks = Arrays.asList(Mockito.mock(Track::class.java), Mockito.mock(Track::class.java), Mockito.mock(Track::class.java))
+
         Mockito.`when`(interactor.loadData(anyString())).thenReturn(Observable.just(track))
         presenter.onSearchTracks("hello")
-        Mockito.verify(view).renderTracks(Mockito.anyList())
+        verify(view).hideLoading()
+        verify(view).renderTracks(Mockito.anyList())
     }
+
+    @Test
+    fun shouldLaunchTrack() {
+        presenter.launchTrackDetail(track.tracks!!, track.tracks!![0], 0)
+        verify(view).launchTrackDetail(
+                Mockito.anyList(),
+                any(),
+                Mockito.anyInt()
+        )
+    }
+
 
 }
