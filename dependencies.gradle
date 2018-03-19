@@ -1,6 +1,6 @@
 ext {
 
-    supportLibrayVersion = '26+'
+    supportLibrayVersion = '27.1.0'
     constraintLayoutVersion="1+"
 
     supportDependencies = [

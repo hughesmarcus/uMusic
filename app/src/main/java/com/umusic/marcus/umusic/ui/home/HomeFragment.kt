@@ -23,8 +23,8 @@ class HomeFragment : Fragment(), HomePresenter.View {
     override fun launchAlbumDetail(album: Album) {
         val tag = "album"
         when {
-            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
-                val ft = activity.supportFragmentManager.beginTransaction()
+            null == activity!!.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, TracksFragment.newInstance(album), tag)
                 ft.addToBackStack(null)
                 ft.commit()
@@ -35,8 +35,8 @@ class HomeFragment : Fragment(), HomePresenter.View {
     override fun launchGenreDetail(category: Category) {
         val tag = "category"
         when {
-            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
-                val ft = activity.supportFragmentManager.beginTransaction()
+            null == activity!!.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, PlaylistsFragment.newInstance(category), tag)
                 ft.addToBackStack(null)
                 ft.commit()
@@ -48,14 +48,14 @@ class HomeFragment : Fragment(), HomePresenter.View {
 
     lateinit var homePresenter: HomePresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootview = inflater!!.inflate(R.layout.fragment_home, container, false)
 
         return rootview
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         homePresenter = HomePresenter(HomeInteractorImpl(SpotifyClient()))
         homePresenter.view = this
@@ -104,7 +104,7 @@ class HomeFragment : Fragment(), HomePresenter.View {
 
 
     override fun context(): Context {
-        return activity
+        return activity!!.baseContext
     }
 
     override fun onDestroy() {

@@ -41,13 +41,14 @@ class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextL
         searchPresenter.view = this
     }
 
-    @Nullable override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                                        savedInstanceState: Bundle?): View? {
+    @Nullable
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_search, container, false)
 
     }
 
-    override fun onViewCreated(view: View?, @Nullable savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (view != null) {
             ButterKnife.bind(this, view)
@@ -62,7 +63,7 @@ class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextL
     }
 
     override fun getContext(): Context {
-        return activity
+        return activity!!.baseContext
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -124,9 +125,9 @@ class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextL
     }
 
     private fun setupSearchView(menu: Menu) {
-        val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.menu_search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.componentName))
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
         searchView.queryHint = getString(R.string.search_hint)
         searchView.maxWidth = toolbar!!.width
         searchView.setOnQueryTextListener(this)
@@ -158,7 +159,7 @@ class SearchFragment : Fragment(), SearchPresenter.View, SearchView.OnQueryTextL
 
     @SuppressLint("CommitTransaction")
     override fun launchArtistDetail(artist: Artist) {
-        val ft = activity.supportFragmentManager.beginTransaction()
+        val ft = activity!!.supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container_search, ArtistFragment.newInstance(artist))
         ft.addToBackStack(null)
         ft.commit()

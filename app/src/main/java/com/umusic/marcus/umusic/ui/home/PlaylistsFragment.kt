@@ -19,8 +19,8 @@ class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
     override fun launchPlaylistDetail(playlist: Playlist) {
         val tag = "tracks"
         when {
-            null == activity.supportFragmentManager.findFragmentByTag(tag) -> {
-                val ft = activity.supportFragmentManager.beginTransaction()
+            null == activity!!.supportFragmentManager.findFragmentByTag(tag) -> {
+                val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, TracksFragment.newInstance(playlist))
                 ft.addToBackStack(null)
                 ft.commit()
@@ -35,7 +35,7 @@ class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
     }
 
     override fun context(): Context {
-        return activity
+        return activity!!.baseContext
     }
 
     // TODO: Customize parameters
@@ -46,20 +46,20 @@ class PlaylistsFragment : Fragment(), PlaylistsPresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        category = arguments.getParcelable(CATEGORY)
+        category = arguments!!.getParcelable(CATEGORY)
         if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
+            mColumnCount = arguments!!.getInt(ARG_COLUMN_COUNT)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_playlists, container, false)
 
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         playlistsPresenter = PlaylistsPresenter(PlaylistInteractor(SpotifyClient()))
         playlistsPresenter.view = this

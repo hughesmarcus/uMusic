@@ -54,26 +54,26 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        ((activity.application as UMusicApplication).appComponent)!!.inject(this)
+        ((activity!!.application as UMusicApplication).appComponent)!!.inject(this)
         super.onCreate(savedInstanceState)
     }
     @Nullable
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val rootView = inflater!!.inflate(R.layout.fragment_audio_player2, container, false)
         ButterKnife.bind(this, rootView)
 
 
-        trackList = getTrackList(arguments.getString(ArtistFragment.EXTRA_TRACKS))
-        trackPosition = arguments.getInt(ArtistFragment.EXTRA_TRACK_POSITION)
+        trackList = getTrackList(arguments!!.getString(ArtistFragment.EXTRA_TRACKS))
+        trackPosition = arguments!!.getInt(ArtistFragment.EXTRA_TRACK_POSITION)
         when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter.providestracks(trackPosition, context, trackList!!)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> audioPlayerPresenter.providestracks(trackPosition, activity!!.baseContext, trackList!!)
         }
 
         audioPlayerPresenter.view = this
         when {
-            arguments.containsKey("album") -> {
-                val album = arguments.getParcelable<Album>("album")
+            arguments!!.containsKey("album") -> {
+                val album = arguments!!.getParcelable<Album>("album")
                 audioPlayerPresenter.setInfoMediaPlayer(trackPosition, album)
             }
             else -> audioPlayerPresenter.setInfoMediaPlayer(trackPosition)
@@ -83,17 +83,17 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
     }
 
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        activity.fragment_mini_player_container.visibility = View.GONE
+        activity!!.fragment_mini_player_container.visibility = View.GONE
     }
     override fun onDestroyView() {
         val tag1 = "mini"
-                val ft = activity.supportFragmentManager.beginTransaction()
+        val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_mini_player_container, MiniPlayerFragment.newInstance(), tag1)
                 ft.commit()
 
-        activity.fragment_mini_player_container.visibility = View.VISIBLE
+        activity!!.fragment_mini_player_container.visibility = View.VISIBLE
         audioPlayerPresenter.terminate()
         super.onDestroyView()
     }
@@ -196,18 +196,18 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
         serviceIntent.putExtra(AudioPlayerService.EXTRA_TRACK_PREVIEW_URL, trackUrl)
 
         when {
-            ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity) && !isPlayerPlaying -> {
+            ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity!!.baseContext) && !isPlayerPlaying -> {
                 trackCurrentPosition = 0
-                activity.applicationContext.stopService(serviceIntent)
-                activity.applicationContext.startService(serviceIntent)
+                activity!!.applicationContext.stopService(serviceIntent)
+                activity!!.applicationContext.startService(serviceIntent)
             }
-            !ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity) -> {
+            !ServiceUtils.isAudioPlayerServiceRunning(AudioPlayerService::class.java, activity!!.baseContext) -> {
                 trackCurrentPosition = 0
-                activity.applicationContext.startService(serviceIntent)
+                activity!!.applicationContext.startService(serviceIntent)
             }
         }
         when (audioPlayerService) {
-            null -> activity.applicationContext
+            null -> activity!!.applicationContext
                     .bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
         }
     }
@@ -237,7 +237,7 @@ class PlayerFragment : Fragment(), AudioPlayerPresenter.View, SeekBar.OnSeekBarC
     }
 
     override fun context(): Context {
-        return activity
+        return activity!!.baseContext
     }
 
     companion object {

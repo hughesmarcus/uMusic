@@ -48,14 +48,14 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
         //      ft.remove(prev)
         //  }
         when {
-            arguments.containsKey(PLAYLIST) -> {
-                val ft = activity.supportFragmentManager.beginTransaction()
+            arguments!!.containsKey(PLAYLIST) -> {
+                val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position))
                 ft.addToBackStack(null)
                 ft.commit()
             }
             else -> {
-                val ft = activity.supportFragmentManager.beginTransaction()
+                val ft = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragment_container, PlayerFragment.newInstance(album, TracksUtil.setTracks(tracks), position))
                 ft.addToBackStack(null)
                 ft.commit()
@@ -81,24 +81,24 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         when {
-            arguments.containsKey(PLAYLIST) -> playlist = arguments.getParcelable(PLAYLIST)
-            else -> album = arguments.getParcelable(ALBUM)
+            arguments!!.containsKey(PLAYLIST) -> playlist = arguments!!.getParcelable(PLAYLIST)
+            else -> album = arguments!!.getParcelable(ALBUM)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_tracks, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
 
         tracksPresenter = TracksPresenter(TracksInteractor(SpotifyClient()))
         tracksPresenter.view = this
         when {
-            arguments.containsKey(PLAYLIST) -> {
+            arguments!!.containsKey(PLAYLIST) -> {
                 initializeViews(playlist)
                 tracksPresenter.getTracks(playlist.owner!!.id!!, playlist.id!!)
             }
@@ -115,7 +115,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
 
         rv_tracks.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         when {
-            arguments.containsKey(PLAYLIST) -> {
+            arguments!!.containsKey(PLAYLIST) -> {
                 val tracksAdapter = TracksAdapter()
                 tracksAdapter.setItemClickListener(
 
@@ -141,7 +141,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
 
                             override fun onImageClick(tracks: List<Item>, track: Item, position: Int) {
                                 TrackOptionsFragment.newInstance().show(
-                                        activity.supportFragmentManager,
+                                        activity!!.supportFragmentManager,
                                         null
                                 )
                             }
@@ -193,7 +193,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
         txt_line_tracks!!.visibility = View.VISIBLE
         iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_tracks_not_found)
-        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_not_found))
+        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(activity!!.baseContext, R.mipmap.ic_not_found))
     }
 
     override fun showConnectionErrorMessage() {
@@ -201,7 +201,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
         txt_line_tracks!!.visibility = View.VISIBLE
         iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_internet_connection)
-        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_not_internet))
+        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(activity!!.baseContext, R.mipmap.ic_not_internet))
     }
 
     private fun hideAndShowTitleToolbar(visibility: Int) {

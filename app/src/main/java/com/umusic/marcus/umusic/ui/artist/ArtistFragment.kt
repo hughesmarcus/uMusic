@@ -28,23 +28,22 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
 
 
     private var artistPresenter: ArtistPresenter? = null
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootview = inflater!!.inflate(R.layout.fragment_artist, container, false)
 
         return rootview
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        if (view != null) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             ButterKnife.bind(this, view)
-        }
+
         setupRecyclerView()
 
         artistPresenter = ArtistPresenter(TracksInteractor(SpotifyClient()))
         artistPresenter!!.view = this
 
-        val artist = arguments.getParcelable<Artist>(ARTIST)
+        val artist = arguments!!.getParcelable<Artist>(ARTIST)
         initializeViews(artist)
 
         artistPresenter!!.onSearchTracks(artist.id!!)
@@ -114,7 +113,7 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
 
     override fun launchTrackDetail(tracks: List<Track>, track: Track, position: Int) {
 
-        val ft = activity.supportFragmentManager.beginTransaction()
+        val ft = activity!!.supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container_search, PlayerFragment.newInstance(TracksUtil.setTracks(tracks), position))
         ft.addToBackStack(null)
         ft.commit()
@@ -129,7 +128,7 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            activity.onBackPressed()
+            activity!!.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -156,7 +155,7 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
             artist.images!!.size > 0 -> {
                 Picasso.with(activity)
                         .load(artist.images!![0].url)
-                        .transform(BlurEffectUtils(activity, 20))
+                        .transform(BlurEffectUtils(context(), 20))
                         .into(iv_collapsing_artist)
                 Picasso.with(activity).load(artist.images!![0].url).into(civ_artist)
             }
@@ -165,7 +164,7 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
                 civ_artist!!.visibility = View.GONE
                 Picasso.with(activity)
                         .load(imageHolder)
-                        .transform(BlurEffectUtils(activity, 20))
+                        .transform(BlurEffectUtils(context(), 20))
                         .into(iv_collapsing_artist)
             }
         }
@@ -179,8 +178,10 @@ class ArtistFragment : Fragment(), ArtistPresenter.View, AppBarLayout.OnOffsetCh
 
 
     override fun context(): Context {
-        return activity
+        return activity!!.baseContext
     }
+
+
     companion object {
 
         val EXTRA_REPOSITORY = "EXTRA_ARTIST"
