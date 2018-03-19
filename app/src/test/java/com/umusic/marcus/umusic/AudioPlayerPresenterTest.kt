@@ -5,4 +5,4 @@ import org.mockito.junit.MockitoJUnitRunner
 
 
 @RunWith(MockitoJUnitRunner::class)
-class AudioPlayerPresenterTest 
+class AudioPlayerPresenterTest

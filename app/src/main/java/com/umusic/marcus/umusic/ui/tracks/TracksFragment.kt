@@ -193,7 +193,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
         txt_line_tracks!!.visibility = View.VISIBLE
         iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_tracks_not_found)
-        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context(), R.mipmap.ic_not_found))
+        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_not_found))
     }
 
     override fun showConnectionErrorMessage() {
@@ -201,7 +201,7 @@ class TracksFragment : Fragment(), AppBarLayout.OnOffsetChangedListener, TracksP
         txt_line_tracks!!.visibility = View.VISIBLE
         iv_tracks!!.visibility = View.VISIBLE
         txt_line_tracks!!.text = getString(R.string.error_internet_connection)
-        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context(), R.mipmap.ic_not_internet))
+        iv_tracks!!.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_not_internet))
     }
 
     private fun hideAndShowTitleToolbar(visibility: Int) {
